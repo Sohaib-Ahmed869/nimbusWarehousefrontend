@@ -13,6 +13,7 @@ import { FiLogOut } from "react-icons/fi";
 import { MdOutlineRecordVoiceOver } from "react-icons/md";
 import { FiDelete } from "react-icons/fi";
 import { BiCartAdd } from "react-icons/bi";
+import { BsList } from "react-icons/bs";
 
 import Dashboard from "./dashboard";
 import AddProduct from "./addproduct";
@@ -24,11 +25,16 @@ import Profile from "./Profile";
 import Billing from "./billing";
 import CashierAdd from "./CashierAdd";
 import CashierManagement from "./CashierManagement";
-
+import Statistics from "./statistics";
 import { Modal } from "react-bootstrap";
 import { CiSettings } from "react-icons/ci";
 
+import "./dashboardLayout.css";
+
 const DashboardLayout = () => {
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [mobileView, setMobileView] = useState(false);
   const [warehouseToken, setWarehouseToken] = useState(
     localStorage.getItem("warehousetoken") || null
   );
@@ -44,11 +50,140 @@ const DashboardLayout = () => {
     }
   }, [warehouseToken]);
 
+  useEffect(() => {
+    console.log(sidebarVisible);
+  }, [sidebarVisible]);
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setMobileView(true);
+      setSidebarVisible(false);
+    } else {
+      setMobileView(false);
+    }
+  }, [window.innerWidth]);
+
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
 
   return (
     <div className="flex flex-row w-full">
+      <div className="flex text-right">
+        <BsList
+          className="absolute w-10 h-10  cursor-pointer"
+          onClick={() => {
+            if (!mobileView) {
+              setSidebarVisible(!sidebarVisible);
+              setMobileView(false);
+              setShowMobileMenu(false);
+            }
+            if (mobileView) {
+              setShowMobileMenu(!showMobileMenu);
+              setSidebarVisible(false);}
+          }}
+        />
+      </div>
+      {showMobileMenu && (
+        <div className="absolute top-5 left-5 mobile-menu z-30 bg-white shadow-lg">
+          <div className="flex flex-col items-end justify-end">
+            <div
+              clas6sName="flex flex-col items-end justify-center font text-md"
+              style={{ color: "#2e408b" }}
+            >
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                  activeOption === "Dashboard" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => setActiveOption("Dashboard")}
+              >
+                <FiBarChart className="w-4 mr-2" />
+                <p>Dashboard</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4  ${
+                  activeOption === "Statistics" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => setActiveOption("Statistics")}
+              >
+                <FiSlack className="w-4 mr-2" />
+                <p className="">Statistics</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                  activeOption === "Inbound" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => setActiveOption("Inbound")}
+              >
+                <FiCornerRightDown className="w-4 mr-2" />
+                <p className="">Inbound</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                  activeOption === "Clients" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => setActiveOption("Clients")}
+              >
+                <FiUsers className="w-4 mr-2" />
+                <p className="">Clients</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                  activeOption === "Schedule" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => setActiveOption("Schedule")}
+              >
+                <FaCcMastercard className="w-4 mr-2" />
+                <p className="">Rate Management</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                  activeOption === "Add Product" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => setActiveOption("Add Product")}
+              >
+                <BiCartAdd className="w-4 mr-2" />
+                <p className="">Product Management</p>
+              </div>
+
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                  activeOption === "CashierDelete" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => setActiveOption("CashierDelete")}
+              >
+                <MdOutlineRecordVoiceOver className="w-4 mr-2" />
+                <p className="">Manage Cashiers</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold ${
+                  activeOption === "Profile" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => setActiveOption("Profile")}
+              >
+                <FiUser className="w-4 mr-2" />
+                <p className="">Profile</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold ${
+                  activeOption === "Billing" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => setActiveOption("Billing")}
+              >
+                <FaWallet className="w-4 mr-2" />
+                <p className="">Billing</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold`}
+                onClick={() => setShowLogoutModal(true)}
+              >
+                <FiLogOut className="w-4 mr-2" />
+                <p className="">Logout</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showLogoutModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
       )}
@@ -56,7 +191,11 @@ const DashboardLayout = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
       )}
       {warehouseToken && (
-        <div className="w-1/6 bg-white border-r border-black">
+        <div
+          className={` bg-white border-r w-1/6 border-black sidebar ${
+            !sidebarVisible ? "hidden" : "" || mobileView ? "hidden" : ""
+          } h-screen`}
+        >
           <div className="w-full flex items-center justify-center">
             <img src={Logo} alt="logo" className="w-20 m-5" />
           </div>
@@ -156,7 +295,10 @@ const DashboardLayout = () => {
           </div>
         </div>
       )}
-      <div className="w-5/6 bg-white">
+      <div
+        className={`bg-white 
+          ${mobileView ? "w-full" : !sidebarVisible ? "w-full" : "w-5/6"}`}
+      >
         <Modal
           show={showLogoutModal}
           onHide={() => setShowLogoutModal(false)}
@@ -214,7 +356,7 @@ const DashboardLayout = () => {
         {warehouseToken &&
           {
             Dashboard: <Dashboard />,
-            Statistics: <p>Statistics</p>,
+            Statistics: <Statistics />,
             Inbound: <Inbound />,
             Clients: <Clients />,
             Schedule: <AddProductRate />,

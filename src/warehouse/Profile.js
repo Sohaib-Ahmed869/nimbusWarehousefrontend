@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
 import { BiUser } from "react-icons/bi";
+import "./dashboard.css";
 const URL = process.env.REACT_APP_BACKEND_URL;
-
 
 const Profile = () => {
   const [warehouse, setWarehouse] = useState();
@@ -24,14 +24,11 @@ const Profile = () => {
 
     //now send the token to the server to get the warehouse details
     try {
-      const response = await axios.get(
-        `${URL}/warehouses/get-warehouse`,
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${URL}/warehouses/get-warehouse`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
       setWarehouse(response.data);
       setWarehouseId(response.data._id);
     } catch (error) {
@@ -120,10 +117,8 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen p-5">
-      {(showBranchNameModal ||
-        showPasswordModal ||
-        showUsernameModal) && (
+    <div className="flex flex-col w-full min-h-screen p-5 dashboard2">
+      {(showBranchNameModal || showPasswordModal || showUsernameModal) && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
       )}
       <div className="flex flex-col justify-center p-5 border shadow-md rounded-xl">

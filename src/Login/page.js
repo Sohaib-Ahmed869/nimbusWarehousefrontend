@@ -4,6 +4,7 @@ import axios from "axios";
 import { CiMail } from "react-icons/ci";
 import { BiLock } from "react-icons/bi";
 import { Modal } from "react-bootstrap";
+import "./login.css";
 
 const URL = process.env.REACT_APP_BACKEND_URL;
 const generateOTP = () => {
@@ -108,7 +109,7 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post( `${URL}/auth/login`, {
+      const response = await axios.post(`${URL}/auth/login`, {
         username,
         password,
       });
@@ -181,7 +182,10 @@ const Login = () => {
             Sign Up
           </span>
         </p>
-        <p className="text-sm text-gray-500 mt-5" onClick={() => window.location.href = "/cashierLogin"}>
+        <p
+          className="text-sm text-gray-500 mt-5"
+          onClick={() => (window.location.href = "/cashierLogin")}
+        >
           Are you a Cashier?{" "}
           <span className="text-blue-400 cursor-pointer">Click Here</span>
         </p>

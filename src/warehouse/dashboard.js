@@ -20,6 +20,7 @@ import profilepic from "../Assets/LogoWhite.png";
 import { Line } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import { easingEffects } from "chart.js/helpers";
+import "./dashboard.css";
 const URL = process.env.REACT_APP_BACKEND_URL;
 
 ChartJS.register(
@@ -228,7 +229,6 @@ const Dashboard = () => {
           fill: true,
         },
       ],
-      
     });
   };
 
@@ -272,7 +272,7 @@ const Dashboard = () => {
 
   const chartOptions = {
     animation: {
-      duration: 100, // Speed up the animation
+      duration: 30, // Speed up the animation
     },
     scales: {
       x: {
@@ -294,14 +294,14 @@ const Dashboard = () => {
   }, [outboundLogs, products]);
 
   return (
-    <div className="p-20 pt-10 bg-white h-screen w-full overflow-y-auto">
+    <div className="p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard">
       <h1 className="text-3xl font-semibold">Dashboard</h1>
       <p className="text-gray-500">
         Below is the summary of your team activity
       </p>
-      <div className="flex flex-row gap-5 mt-5">
+      <div className="gap-5 mt-5 cards">
         <div
-          className="relative flex w-1/3 p-5 rounded-lg shadow-md items-center gap-5 h-36 justify-between"
+          className="relative flex w-1/3 p-5 rounded-lg shadow-md items-center gap-5 h-36 justify-between card"
           style={{ background: "#208ce4" }}
         >
           <div
@@ -320,7 +320,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div
-          className="relative flex w-1/3 p-5 rounded-lg shadow-md items-center gap-5 h-36 justify-between"
+          className="relative flex w-1/3 p-5 rounded-lg shadow-md items-center gap-5 h-36 justify-between card"
           style={{ background: "#6034b4" }}
         >
           <div
@@ -338,7 +338,7 @@ const Dashboard = () => {
         </div>
 
         <div
-          className="relative flex w-1/3 p-5 rounded-lg shadow-md items-center gap-5 h-36 justify-between"
+          className="relative flex w-1/3 p-5 rounded-lg shadow-md items-center gap-5 h-36 justify-between card"
           style={{ background: "#54ac58" }}
         >
           <div
@@ -355,11 +355,11 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-row gap-5 mt-10">
-        <div className="mt-10 h-96 flex flex-col items-center rounded-xl p-5 shadow-xl w-1/2">
+      <div className="flex flex-row gap-5 mt-10 cards">
+        <div className="mt-10 h-96 flex flex-col items-center rounded-xl p-5 shadow-xl w-1/2 cardgraph">
           <Line data={salesData} options={chartOptions} />
         </div>
-        <div className="mt-10 h-96 flex flex-col items-center rounded-xl p-5 shadow-xl w-1/2">
+        <div className="mt-10 h-96 flex flex-col items-center rounded-xl p-5 shadow-xl w-1/2 cardgraph">
           <Bar data={salesDataByProduct} options={chartOptions} />
         </div>
       </div>
@@ -399,8 +399,8 @@ const Dashboard = () => {
           ))}
         </table>
       </div> */}
-      <div className="flex flex-row gap-5 mt-10 pb-10">
-        <div className="w-1/2 border border-gray-400 rounded-xl p-2 h-96 overflow-y-auto">
+      <div className="flex flex-row gap-5 mt-10 pb-10 cards">
+        <div className="w-1/2 border border-gray-400 rounded-xl p-2 h-96 overflow-y-auto card">
           <h1 className="text-xl font-semibold mt-2 text-center">
             Inbound Logs
           </h1>
@@ -443,7 +443,7 @@ const Dashboard = () => {
             </div>
           ))}
         </div>
-        <div className="w-1/2 border border-gray-400 rounded-xl p-2 h-96 overflow-y-auto">
+        <div className="w-1/2 border border-gray-400 rounded-xl p-2 h-96 overflow-y-auto card">
           <h1 className="text-xl font-semibold mt-2 text-center">
             Outbound Logs
           </h1>

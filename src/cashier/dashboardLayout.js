@@ -15,7 +15,7 @@ import { FiDelete } from "react-icons/fi";
 import { BiCartAdd } from "react-icons/bi";
 
 import { Modal } from "react-bootstrap";
-
+import "./dashboardLayout.css";
 import Clients from "./client";
 import AddProductRate from "./addProductRate";
 import AddProduct from "./addproduct";
