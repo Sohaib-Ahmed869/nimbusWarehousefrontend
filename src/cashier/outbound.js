@@ -14,6 +14,7 @@ const Outbound = () => {
   const [selectedClient, setSelectedClient] = useState("");
 
   const [selectedProduct, setSelectedProduct] = useState("");
+  const [selectedProductsRate, setSelectedProductsRate] = useState([]);
   const [selectedProductQuantity, setSelectedProductQuantity] = useState(0);
 
   const [reason, setReason] = useState("");
@@ -64,17 +65,29 @@ const Outbound = () => {
   }, [selectedProductsId, selectedProducts]);
 
   const onAddProductToOutbound = (product) => {
+    //if product already exists in the selected products, then just increase the quantity
+    if (selectedProductsId.includes(product)) {
+      const index = selectedProductsId.indexOf(product);
+      const newQuantityChanges = [...quantityChanges];
+      newQuantityChanges[index] += 1;
+      setQuantityChanges(newQuantityChanges);
+
+      return;
+    }
     console.log(product);
     setSelectedProductsId([...selectedProductsId, product]);
     const product_name = getProductName(product);
     setSelectedProducts([...selectedProducts, product_name]);
     setQuantityChanges([...quantityChanges, 1]);
+    const product_rate = getProductRate(product);
+    setSelectedProductsRate([...selectedProductsRate, product_rate]);
   };
 
   const onRemoveProductFromOutbound = (index) => {
     setSelectedProductsId(selectedProductsId.filter((_, i) => i !== index));
     setSelectedProducts(selectedProducts.filter((_, i) => i !== index));
     setQuantityChanges(quantityChanges.filter((_, i) => i !== index));
+    setSelectedProductsRate(selectedProductsRate.filter((_, i) => i !== index));
   };
 
   const onQuantityChange = (index, value) => {
@@ -95,7 +108,7 @@ const Outbound = () => {
       await axios.put(`${URL}/products/outbound`, {
         productNames: selectedProducts,
         products: selectedProductsId,
-        quantityChange:quantityChanges,
+        quantityChange: quantityChanges,
         reason,
         clientName: clientName,
         total: selectedProducts.reduce(
@@ -123,12 +136,101 @@ const Outbound = () => {
 
   const getProductRate = (productId) => {
     const product = products.find((product) => product.productId === productId);
+    console.log("Returned rate", product.rate);
     return product ? product.rate : 0;
   };
 
   useEffect(() => {
-    console.log("Selected Products", selectedProduct);
-  }, [selectedProduct]);
+    console.log("Selected Products", selectedProducts);
+  }, [selectedProducts]);
+
+  const printReceipt2 = (
+    customerName,
+    cartItems,
+    selectedProductsRate,
+    GrandTotal,
+    quantityChanges
+  ) => {
+    // Constructing receipt content
+    let receiptContent = "";
+    receiptContent +=
+      "<div style='text-align:center; margin:auto; width: 100%; padding: 0px;'>";
+    receiptContent +=
+      "<div style='margin-bottom: 10px;'><img src='Logo.png' alt='Logo' style='width:100px;'></div>"; // Replace 'logo.png' with the path to your logo
+    receiptContent +=
+      "<div><strong>------------------------------ Receipt ------------------------------</strong></div>";
+    receiptContent +=
+      "<div style=' margin-top:30px, font-weight:bold'>Shop#01, Ground Floor, Phantom Mall, I-8 Markaz, Islamabad</div>";
+    receiptContent +=
+      "<div style=' margin-top:10px, font-weight:bold'>051 2719280</div>";
+    receiptContent +=
+      "<div style=' margin-top:10px, font-weight:bold'>NTN Number: C251459-8</div>";
+    receiptContent +=
+      "<div style=' margin-top:30px'>Customer: " + customerName + "</div>";
+    receiptContent +=
+      "<div style=' margin-top:30px'>Date: " +
+      new Date().toLocaleString() +
+      "</div>";
+    receiptContent +=
+      "<div style='border:2px black solid; width:100%; align-self:center;  margin-top:30px'></div>";
+    receiptContent +=
+      "<div style=' margin-top:30px'><strong>------------------------------ Items ------------------------------</strong></div>";
+
+    // Table for displaying items
+    receiptContent += "<table style='width: 100%; border-collapse: collapse;'>";
+    receiptContent +=
+      "<thead><tr><th style='border: 1px solid #000; padding: 8px;'>Item</th><th style='border: 1px solid #000; padding: 8px;'>Quantity</th><th style='border: 1px solid #000; padding: 8px;'>Price</th></tr></thead>";
+    receiptContent += "<tbody>";
+    cartItems.forEach((item) => {
+      receiptContent += "<tr>";
+      receiptContent +=
+        "<td style='border: 1px solid #000; padding: 8px;'>" + item + "</td>";
+      receiptContent +=
+        "<td style='border: 1px solid #000; padding: 8px;'>" +
+        quantityChanges[cartItems.indexOf(item)] +
+        "</td>";
+      receiptContent +=
+        "<td style='border: 1px solid #000; padding: 8px;'>PKR" +
+        selectedProductsRate[cartItems.indexOf(item)] +
+        "</td>";
+      receiptContent += "</tr>";
+    });
+    receiptContent += "</tbody></table>";
+
+    receiptContent += "<div style='width: 100%;text-align:center;'>";
+    receiptContent +=
+      "<div style='border:2px black solid; width:100%; align-self:center;margin-top:10px;'></div>";
+    receiptContent +=
+      "<div style='margin-top:10px'><strong>Total: PKR" +
+      GrandTotal +
+      "</strong></div>";
+
+    receiptContent +=
+      "<div style='border:2px black solid; width:100%; align-self:center;margin-top:10px;'></div>";
+
+    receiptContent +=
+      "<div style='border:2px black solid; width:100%; align-self:center;margin-top:10px;'></div>";
+    receiptContent +=
+      "<div style='margin-top:10px; margin-bottom:20px'><strong>Thank you for your purchase!</strong></div>";
+    receiptContent += "</div>";
+    receiptContent += "</div>";
+
+    // Opening a new window to display the receipt content
+    const printWindow = window.open("", "_blank");
+
+    // Writing the receipt content to the new window
+    printWindow.document.write(
+      "<div style='font-family: Arial, sans-serif;'>" +
+        receiptContent +
+        "</div>"
+    );
+
+    // Closing the document for printing
+    printWindow.document.close();
+
+    // Triggering printing
+    printWindow.print();
+  };
 
   return (
     <div className="flex flex-col w-full min-h-screen p-5">
@@ -144,6 +246,21 @@ const Outbound = () => {
           </button>
         </div>
 
+        <div className="flex items-center justify-between p-5 w-full">
+          <p className="text-2xl font-bold">Client</p>
+          <select
+            className="border p-2 rounded-md w-96"
+            onChange={onClientChange}
+          >
+            <option value={null}>Select Client</option>
+            {clients.map((client) => (
+              <option key={client._id} value={client._id}>
+                {client.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="table w-full p-5">
           {products.length != 0 ? (
             <div className="table-row-group">
@@ -154,6 +271,7 @@ const Outbound = () => {
                 <div className="table-cell border p-2">Product Name</div>
                 <div className="table-cell border p-2">In Stock</div>
                 <div className="table-cell border p-2">Price for client</div>
+                <div className="table-cell border p-2">Action</div>
               </div>
               {products.map((product, index) => (
                 <div
@@ -171,10 +289,10 @@ const Outbound = () => {
                   </div>
                   <div className="table-cell p-2 border border-l-0">
                     <button
-                      className="text-red-500"
-                      onClick={() => onRemoveProductFromOutbound(index)}
+                      className="text-green-500"
+                      onClick={() => onAddProductToOutbound(product.productId)}
                     >
-                      Remove
+                      Add to Order
                     </button>
                   </div>
                 </div>
@@ -185,17 +303,6 @@ const Outbound = () => {
           )}
         </div>
 
-        <div className="flex items-center justify-between p-5 w-full">
-          <p className="text-2xl font-bold">Client</p>
-          <select className="border p-2 rounded-md" onChange={onClientChange}>
-            <option value={null}>Select Client</option>
-            {clients.map((client) => (
-              <option key={client._id} value={client._id}>
-                {client.name}
-              </option>
-            ))}
-          </select>
-        </div>
         <div className="table w-full p-5">
           {selectedProductsId.length != 0 ? (
             <div className="table-row-group">
@@ -206,6 +313,7 @@ const Outbound = () => {
                 <div className="table-cell border p-2">Product Name</div>
                 <div className="table-cell border p-2">Quantity</div>
                 <div className="table-cell border p-2">Price</div>
+                <div className="table-cell border p-2">Action</div>
               </div>
               {selectedProducts.map((product, index) => (
                 <div
@@ -225,6 +333,14 @@ const Outbound = () => {
                   <div className="table-cell p-2 border border-l-0 border-r-0">
                     {getProductRate(selectedProductsId[index]) *
                       quantityChanges[index]}
+                  </div>
+                  <div className="table-cell p-2 border border-l-0">
+                    <button
+                      className="text-red-500"
+                      onClick={() => onRemoveProductFromOutbound(index)}
+                    >
+                      Remove
+                    </button>
                   </div>
                 </div>
               ))}
@@ -252,6 +368,29 @@ const Outbound = () => {
             className="border p-2 rounded-md w-full"
             onChange={(e) => setReason(e.target.value)}
           ></textarea>
+        </div>
+
+        <div className="flex items-center justify-center">
+          <button
+            className="bg-blue-500 text-white p-3 rounded-md mt-2 w-full hover:bg-blue-700"
+            onClick={() =>
+              printReceipt2(
+                getClientName(selectedClient),
+                selectedProducts,
+                selectedProductsRate,
+                selectedProducts.reduce(
+                  (acc, product, index) =>
+                    acc +
+                    getProductRate(selectedProductsId[index]) *
+                      quantityChanges[index],
+                  0
+                ),
+                quantityChanges
+              )
+            }
+          >
+            Print Receipt
+          </button>
         </div>
 
         <div className="flex items-center justify-center">

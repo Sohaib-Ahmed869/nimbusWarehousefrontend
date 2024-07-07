@@ -90,15 +90,15 @@ const Clients = () => {
         show={showAddClientModal}
         onHide={() => setShowAddClientModal(false)}
         centered
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10 modal"
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            <p className="text-2xl font-bold">Add Client</p>
+            <p className="text-2xl font-bold p-2">Add Client</p>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="flex flex-col w-full p-20">
+          <div className="flex flex-col w-full p-20 modalbody">
             <p className="text-sm text-gray-500">Client Name</p>
             <div className="w-full flex items-center border-2 border-gray-300 rounded-full p-3 mt-2">
               <input

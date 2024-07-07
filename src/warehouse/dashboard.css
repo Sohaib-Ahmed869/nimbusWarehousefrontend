@@ -25,4 +25,11 @@
     padding: 20px;
     margin-top: 100px;
   }
+  .modal {
+    width: 90%;
+    padding: 0%;
+  }
+  .modalbody{
+    padding: 20px;
+  }
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BiPlus } from "react-icons/bi";
 import { Modal } from "react-bootstrap";
+import './dashboard.css';
 const URL = process.env.REACT_APP_BACKEND_URL;
 
 const AddProduct = () => {
@@ -94,11 +95,11 @@ const AddProduct = () => {
         show={showAddProductModal}
         onHide={() => setShowAddProductModal(false)}
         centered
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10 modal"
       >
         <Modal.Header closeButton></Modal.Header>
-        <Modal.Body>
-          <div className="flex items-center justify-center p-5">
+        <Modal.Body className="modalbody">
+          <div className="flex items-center justify-center">
             <BiPlus className="w-6 border rounded-full border-gray-300 mt-1 h-6 text-blue-500 me-2" />
             <p className="text-2xl font-bold">Add Product</p>
           </div>

@@ -20,6 +20,7 @@ import Clients from "./client";
 import AddProductRate from "./addProductRate";
 import AddProduct from "./addproduct";
 import Outbound from "./outbound";
+import Dashboard from "../warehouse/dashboard";
 
 const CashierDashboardLayout = () => {
   const [warehouseToken, setWarehouseToken] = useState(
@@ -66,15 +67,7 @@ const CashierDashboardLayout = () => {
               <FiBarChart className="w-4 mr-2" />
               <p>Dashboard</p>
             </div>
-            <div
-              className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4  ${
-                activeOption === "Statistics" ? "bg-gray-300" : ""
-              }`}
-              onClick={() => setActiveOption("Statistics")}
-            >
-              <FiSlack className="w-4 mr-2" />
-              <p className="">Statistics</p>
-            </div>
+
             <div
               className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
                 activeOption === "Inbound" ? "bg-gray-300" : ""
@@ -179,8 +172,7 @@ const CashierDashboardLayout = () => {
 
         {warehouseToken &&
           {
-            Dashboard: <p>Dashboard</p>,
-            Statistics: <p>Statistics</p>,
+            Dashboard: <Dashboard />,
             Inbound: <Outbound />,
             Clients: <Clients />,
             Schedule: <AddProductRate />,

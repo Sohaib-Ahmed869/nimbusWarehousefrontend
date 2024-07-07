@@ -176,7 +176,7 @@ const Profile = () => {
         show={showUsernameModal}
         onHide={() => setShowUsernameModal(false)}
         centered
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10 modal modalbody"
       >
         <Modal.Header closeButton>
           <Modal.Title>Update Username</Modal.Title>
@@ -209,7 +209,7 @@ const Profile = () => {
         show={showPasswordModal}
         onHide={() => setShowPasswordModal(false)}
         centered
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10 modal modalbody"
       >
         <Modal.Header closeButton>
           <Modal.Title>Update Password</Modal.Title>
@@ -242,7 +242,7 @@ const Profile = () => {
         show={showBranchNameModal}
         onHide={() => setShowBranchNameModal(false)}
         centered
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10 modal modalbody"
       >
         <Modal.Header closeButton>
           <Modal.Title>Update Branch Name</Modal.Title>

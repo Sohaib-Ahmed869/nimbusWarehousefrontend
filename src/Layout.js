@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
+import Home from "./Home/page";
 import Login from "./Login/page";
 import Signup from "./Signup/page";
 import DashboardLayout from "./warehouse/dashboardLayout";
@@ -11,6 +12,7 @@ import CashierDashboardLayout from "./cashier/dashboardLayout";
 const Layout = () => {
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
 

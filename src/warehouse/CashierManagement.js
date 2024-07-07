@@ -152,7 +152,7 @@ const CashierDelete = () => {
         show={cashierDeleteModal}
         onHide={() => setCashierDeleteModal(false)}
         centered
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10 modalbody"
       >
         <Modal.Header closeButton>
           <Modal.Title>
@@ -183,7 +183,7 @@ const CashierDelete = () => {
         show={updatePasswordModal}
         onHide={() => setUpdatePasswordModal(false)}
         centered
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10 modalbody"
       >
         <Modal.Header closeButton>
           <Modal.Title>
