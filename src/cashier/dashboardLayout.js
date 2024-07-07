@@ -21,6 +21,7 @@ import AddProductRate from "./addProductRate";
 import AddProduct from "./addproduct";
 import Outbound from "./outbound";
 import Dashboard from "../warehouse/dashboard";
+import OutboundNoClient from "./outboundNoClient";
 
 const CashierDashboardLayout = () => {
   const [warehouseToken, setWarehouseToken] = useState(
@@ -76,6 +77,15 @@ const CashierDashboardLayout = () => {
             >
               <FiCornerRightUp className="w-4 mr-2" />
               <p className="">Outbound</p>
+            </div>
+            <div
+              className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                activeOption === "OutBoundNoClient" ? "bg-gray-300" : ""
+              }`}
+              onClick={() => setActiveOption("OutBoundNoClient")}
+            >
+              <MdOutlineRecordVoiceOver className="w-4 mr-2" />
+              <p className="">Outbound No Client</p>
             </div>
             <div
               className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
@@ -179,6 +189,7 @@ const CashierDashboardLayout = () => {
             "Add Product": <AddProduct />,
             Profile: <p>Profile</p>,
             Billing: <p>Billing</p>,
+            OutBoundNoClient: <OutboundNoClient />,
           }[activeOption]}
       </div>
     </div>
