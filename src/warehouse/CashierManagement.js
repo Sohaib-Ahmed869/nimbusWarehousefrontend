@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Modal } from "react-bootstrap";
+import { Modal, ModalBody } from "react-bootstrap";
 import { FiTrash } from "react-icons/fi";
 import { FiEdit3 } from "react-icons/fi";
 import CashierAdd from "./CashierAdd";
@@ -83,7 +83,7 @@ const CashierDelete = () => {
   };
 
   return (
-    <div className="login flex  justify-center h-screen w-full p-10">
+    <div className="flex  justify-center min-h-screen w-full p-10">
       <div className="login_container flex flex-col items-center w-full">
         <div className="flex items-center justify-between p-5 w-full">
           <p className="text-2xl font-bold">View and manage cashier accounts</p>
@@ -219,15 +219,16 @@ const CashierDelete = () => {
         show={showAddCashierModal}
         onHide={() => setShowAddCashierModal(false)}
         centered
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl items-center justify-center flex flex-col shadow-xl z-50 bg-white p-10"
+                style={{height:"100%",overflowY:"scroll"}}
       >
+
         <Modal.Header closeButton>
           <Modal.Title>
             <button
               onClick={() => {
-
-                setShowAddCashierModal(false)
-                fetchCashiers()
+                setShowAddCashierModal(false);
+                fetchCashiers();
               }}
               className="absolute top-10 right-10"
             >
@@ -235,7 +236,9 @@ const CashierDelete = () => {
             </button>
           </Modal.Title>
         </Modal.Header>
-        <CashierAdd />
+        <ModalBody className="w-full">
+          <CashierAdd />
+        </ModalBody>
       </Modal>
     </div>
   );

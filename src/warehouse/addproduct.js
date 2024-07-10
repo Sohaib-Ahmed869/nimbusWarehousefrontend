@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BiPlus } from "react-icons/bi";
 import { Modal } from "react-bootstrap";
-import './dashboard.css';
+import "./dashboard.css";
 const URL = process.env.REACT_APP_BACKEND_URL;
 
 const AddProduct = () => {
@@ -95,57 +95,67 @@ const AddProduct = () => {
         show={showAddProductModal}
         onHide={() => setShowAddProductModal(false)}
         centered
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10 modal"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 w-1/2 rounded-2xl shadow-xl z-50 bg-white p-5 modal"
       >
         <Modal.Header closeButton></Modal.Header>
-        <Modal.Body className="modalbody">
-          <div className="flex items-center justify-center">
-            <BiPlus className="w-6 border rounded-full border-gray-300 mt-1 h-6 text-blue-500 me-2" />
-            <p className="text-2xl font-bold">Add Product</p>
-          </div>
-          <div className="flex flex-col w-full p-10">
-            <p className="text-sm text-gray-500">Product Name</p>
-            <div className="w-full flex  items-center border-2 border-gray-300 rounded-full p-3 mt-2">
-              <input
-                type="text"
-                className="w-full"
-                placeholder="Product Name"
-                value={name}
-                onChange={(e) => setProductname(e.target.value)}
-              />
+        <Modal.Body className="modalbody flex flex-col">
+          <div className="flex flex-col">
+            <div className="flex items-center justify-center">
+              <BiPlus className="w-6 border rounded-full border-gray-300 mt-1 h-6 text-blue-500 me-2" />
+              <p className="text-2xl font-bold">Add Product</p>
             </div>
-            <p className="text-sm text-gray-500 mt-5">Unit</p>
-            <div className="w-full flex  items-center border-2 border-gray-300 rounded-full p-3 mt-2">
-              <input
-                type="text"
-                className="w-full"
-                placeholder="Unit"
-                value={unit}
-                onChange={(e) => setUnit(e.target.value)}
-              />
+            <div>
+              <div className="flex items-center justify-between mt-5">
+                <div>
+                  <p className="text-sm text-gray-500">Product Name</p>
+                  <div className="w-full flex  items-center border-2 border-gray-300 rounded-full p-3 mt-2">
+                    <input
+                      type="text"
+                      className="w-full"
+                      placeholder="Product Name"
+                      value={name}
+                      onChange={(e) => setProductname(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Unit</p>
+                  <div className="w-full flex  items-center border-2 border-gray-300 rounded-full p-3 mt-2">
+                    <input
+                      type="text"
+                      className="w-full"
+                      placeholder="Unit"
+                      value={unit}
+                      onChange={(e) => setUnit(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500 mt-5">Stock</p>
+                <div className="w-full flex  items-center border-2 border-gray-300 rounded-full p-3 mt-2">
+                  <input
+                    type="number"
+                    className="w-full"
+                    placeholder="Stock"
+                    value={stock}
+                    onChange={(e) => setStock(e.target.value)}
+                  />
+                </div>
+              </div>
+              <button
+                className="w-full py-4 bg-blue-500 text-white rounded-full p-2 mt-10 hover:bg-blue-600"
+                onClick={addProduct}
+              >
+                Add Product
+              </button>
+              <button
+                className="w-full py-4 bg-red-500 text-white rounded-full p-2 mt-5 hover:bg-red-600"
+                onClick={() => setShowAddProductModal(false)}
+              >
+                Cancel
+              </button>
             </div>
-            <p className="text-sm text-gray-500 mt-5">Stock</p>
-            <div className="w-full flex  items-center border-2 border-gray-300 rounded-full p-3 mt-2">
-              <input
-                type="number"
-                className="w-full"
-                placeholder="Stock"
-                value={stock}
-                onChange={(e) => setStock(e.target.value)}
-              />
-            </div>
-            <button
-              className="w-full py-4 bg-blue-500 text-white rounded-full p-2 mt-10 hover:bg-blue-600"
-              onClick={addProduct}
-            >
-              Add Product
-            </button>
-            <button
-              className="w-full py-4 bg-red-500 text-white rounded-full p-2 mt-5 hover:bg-red-600"
-              onClick={() => setShowAddProductModal(false)}
-            >
-              Cancel
-            </button>
           </div>
         </Modal.Body>
       </Modal>

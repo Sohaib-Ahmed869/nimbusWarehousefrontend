@@ -41,13 +41,13 @@ const CashierLogin = () => {
   };
 
   return (
-    <div className={`login flex items-center justify-center h-screen w-full`}>
+    <div className={`login flex items-center justify-center min-h-screen w-full pb-10`}>
       {(showForgetPasswordModal) && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
       )}
       <div className="login_container flex flex-col justify-center items-center w-1/3">
         <img src={Logo} alt="logo" className="h-36" />
-        <p className="text-3xl font-bold mt-0">Welcome Back</p>
+        <p className="text-3xl font-bold mt-0">Cashier Login</p>
         <p className="text-sm text-gray-500 mt-2">
           Login to your cashier account
         </p>

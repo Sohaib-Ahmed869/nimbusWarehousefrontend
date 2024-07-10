@@ -65,6 +65,15 @@ const Outbound = () => {
   }, [selectedProductsId, selectedProducts]);
 
   const onAddProductToOutbound = (product) => {
+    console.log(product);
+    //if the stock is less than the quantity, then return
+    if (
+      getProductQuantity(product) <
+      quantityChanges[selectedProductsId.indexOf(product)] + 1
+    ) {
+      alert("Not enough stock");
+      return;
+    }
     //if product already exists in the selected products, then just increase the quantity
     if (selectedProductsId.includes(product)) {
       const index = selectedProductsId.indexOf(product);
@@ -119,6 +128,14 @@ const Outbound = () => {
         ),
       });
       alert("Outbound successful");
+      //clear the form
+      setSelectedProductsId([]);
+
+      setSelectedProducts([]);
+      setQuantityChanges([]);
+      setSelectedProductsRate([]);
+      setReason("");
+      getProducts();
     } catch (error) {
       alert("Error: " + error.response.data.message);
     }

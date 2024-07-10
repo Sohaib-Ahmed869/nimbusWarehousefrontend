@@ -125,7 +125,9 @@ const Login = () => {
   };
 
   return (
-    <div className={`login flex items-center justify-center h-screen w-full`}>
+    <div
+      className={`login flex items-center justify-center min-h-screen w-full pb-5`}
+    >
       {(showForgetPasswordModal || showOTPModal || showPasswordModal) && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
       )}

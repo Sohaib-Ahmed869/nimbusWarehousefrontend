@@ -39,8 +39,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="login flex items-center justify-center h-screen w-full">
-      <div className="login_container flex flex-col justify-center items-center w-1/3">
+    <div className="login flex items-center justify-center min-h-screen w-full p-5">
+      <div className="login_container flex flex-col justify-center items-center ">
         <img src={Logo} alt="logo" className="h-36" />
         <p className="text-xl font-bold italic">
           Welcome to NimbusWarehouse360 solution

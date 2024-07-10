@@ -434,6 +434,9 @@ const Dashboard = () => {
                             {getWeekDay(activity.date)},{" "}
                             {activity.date.split("T")[0]}
                           </p>
+                          <p className=" text-gray-400 text-sm text-left">
+                            Time: {activity.date.split("T")[1].split(".")[0]}
+                          </p>
                         </div>
                         <div></div>
                       </div>
@@ -471,6 +474,9 @@ const Dashboard = () => {
                           <p className=" text-gray-400 text-sm text-left">
                             {getWeekDay(message.date)},{" "}
                             {message.date.split("T")[0]}
+                          </p>
+                          <p className=" text-gray-400 text-sm text-left">
+                            Time: {message.date.split("T")[1].split(".")[0]}
                           </p>
                         </div>
                       </div>
