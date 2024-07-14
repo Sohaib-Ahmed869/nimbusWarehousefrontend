@@ -1,3 +1,4 @@
+import useStore from "../Store/store";
 import React, { useEffect, useState } from "react";
 import Logo from "../Assets/Logo.png";
 import dashboard from "../Assets/dashboard.png";
@@ -35,20 +36,30 @@ const DashboardLayout = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [mobileView, setMobileView] = useState(false);
-  const [warehouseToken, setWarehouseToken] = useState(
-    localStorage.getItem("warehousetoken") || null
-  );
+
+  const { userRole, setUserRole } = useStore();
+
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [showSignInModal, setShowSignInModal] = useState(false);
   const [activeOption, setActiveOption] = useState("Dashboard");
+
   const onLogout = () => {
-    localStorage.removeItem("warehousetoken");
+    setUserRole(null);
     window.location.href = "/login";
   };
 
   useEffect(() => {
-    if (!warehouseToken) {
+    setShowSignInModal(false);
+    console.log("userRole", userRole);
+    console.log("show pop: ", showSignInModal);
+    if (userRole == null || userRole == "null" || userRole != "tenant") {
+      console.log("inside if");
+      console.log("userRole", userRole);
+      console.log("show pop: ", showSignInModal);
       setShowSignInModal(true);
+      return;
     }
-  }, [warehouseToken]);
+  }, [userRole]);
 
   useEffect(() => {
     console.log(sidebarVisible);
@@ -63,9 +74,6 @@ const DashboardLayout = () => {
     }
   }, [window.innerWidth]);
 
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const [showSignInModal, setShowSignInModal] = useState(false);
-
   return (
     <div className="flex flex-row w-full">
       <div className="flex text-right">
@@ -79,7 +87,8 @@ const DashboardLayout = () => {
             }
             if (mobileView) {
               setShowMobileMenu(!showMobileMenu);
-              setSidebarVisible(false);}
+              setSidebarVisible(false);
+            }
           }}
         />
       </div>
@@ -190,7 +199,7 @@ const DashboardLayout = () => {
       {showSignInModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
       )}
-      {warehouseToken && (
+      {userRole != null && userRole != "null" && userRole == "tenant" && (
         <div
           className={` bg-white border-r w-1/6 border-black sidebar ${
             !sidebarVisible ? "hidden" : "" || mobileView ? "hidden" : ""
@@ -353,7 +362,9 @@ const DashboardLayout = () => {
           </Modal.Body>
         </Modal>
 
-        {warehouseToken &&
+        {userRole != null &&
+          userRole != "null" &&
+          userRole == "tenant" &&
           {
             Dashboard: <Dashboard />,
             Statistics: <Statistics />,

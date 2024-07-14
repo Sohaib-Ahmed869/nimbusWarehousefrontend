@@ -34,69 +34,6 @@ ChartJS.register(
   BarElement
 );
 
-const data = [
-  {
-    title: "New Candidates",
-    value: "12",
-  },
-  {
-    title: "Open Roles",
-    value: "5",
-  },
-  {
-    title: "Archived Jobs",
-    value: "8",
-  },
-];
-
-const TaskList = [
-  {
-    taskname: "Task 1",
-    createdby: "Admin",
-    createdOn: "12/12/2021",
-    Reminder: "12/12/2021",
-    Status: "In Progress",
-  },
-  {
-    taskname: "Task 1",
-    createdby: "Admin",
-    createdOn: "12/12/2021",
-    Reminder: "12/12/2021",
-    Status: "Completed",
-  },
-  {
-    taskname: "Task 1",
-    createdby: "Admin",
-    createdOn: "12/12/2021",
-    Reminder: "12/12/2021",
-    Status: "Completed",
-  },
-  {
-    taskname: "Task 1",
-    createdby: "Admin",
-    createdOn: "12/12/2021",
-    Reminder: "12/12/2021",
-    Status: "In Progress",
-  },
-];
-
-const messages = [
-  {
-    by: "John Doe",
-    message: "Hello",
-    date: "12/12/2021",
-  },
-  {
-    by: "Jane Doe",
-    message: "Hello",
-    date: "12/12/2021",
-  },
-  {
-    by: "John Doe",
-    message: "Hello",
-    date: "12/12/2021",
-  },
-];
 const Dashboard = () => {
   const [products, setProducts] = useState([]);
   const [totalStock, setTotalStock] = useState(0);
@@ -112,7 +49,9 @@ const Dashboard = () => {
 
   const getProducts = async () => {
     try {
-      const response = await axios.get(`${URL}/products`);
+      const response = await axios.get(`${URL}/products`, {
+        withCredentials: true,
+      });
       setProducts(response.data);
     } catch (error) {
       console.error(error);
@@ -121,7 +60,9 @@ const Dashboard = () => {
 
   const getAllInboundLogs = async () => {
     try {
-      const response = await axios.get(`${URL}/products/inbound-logs`);
+      const response = await axios.get(`${URL}/products/inbound-logs`, {
+        withCredentials: true,
+      });
       setInboundLogs(response.data);
     } catch (error) {
       console.error(error);
@@ -130,7 +71,9 @@ const Dashboard = () => {
 
   const getAllOutboundLogs = async () => {
     try {
-      const response = await axios.get(`${URL}/products/outbound-logs`);
+      const response = await axios.get(`${URL}/products/outbound-logs`, {
+        withCredentials: true,
+      });
       setOutboundLogs(response.data);
       console.log(response.data);
     } catch (error) {
@@ -140,7 +83,9 @@ const Dashboard = () => {
 
   const getTotalSales = async () => {
     try {
-      const response = await axios.get(`${URL}/products/total-sales`);
+      const response = await axios.get(`${URL}/products/total-sales`, {
+        withCredentials: true,
+      });
       setTotalSales(response.data.totalSales);
     } catch (error) {
       console.error(error);

@@ -10,7 +10,6 @@ const CashierAdd = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [token, setToken] = useState(localStorage.getItem("warehousetoken"));
 
   const handleSignup = async () => {
     if (!username || !password || !confirmPassword) {
@@ -22,8 +21,6 @@ const CashierAdd = () => {
       return;
     }
 
-    setToken(localStorage.getItem("warehousetoken"));
-
     try {
       const response = await axios.post(
         `${URL}/auth/cashierSignup`,
@@ -32,9 +29,7 @@ const CashierAdd = () => {
           password,
         },
         {
-          headers: {
-            Authorization: `${token}`,
-          },
+          withCredentials: true,
         }
       );
 

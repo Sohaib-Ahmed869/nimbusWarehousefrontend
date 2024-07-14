@@ -5,6 +5,7 @@ import { CiMail } from "react-icons/ci";
 import { BiLock } from "react-icons/bi";
 import { Modal } from "react-bootstrap";
 import "./login.css";
+import useStore from "../Store/store";
 
 const URL = process.env.REACT_APP_BACKEND_URL;
 const generateOTP = () => {
@@ -24,9 +25,9 @@ const Login = () => {
 
   const [showPasswordModal, setShowPasswordModal] = useState(false);
 
-  const [token, setToken] = useState();
-
   const [otp, setOtp] = useState(["", "", "", ""]);
+
+  const { userRole, setUserRole } = useStore();
 
   const handleChange = (element, index) => {
     if (isNaN(element.value)) return false;
@@ -48,10 +49,16 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post(`${URL}/email/send`, {
-        email,
-        otp: generatedOTP,
-      });
+      const response = await axios.post(
+        `${URL}/email/send`,
+        {
+          email,
+          otp: generatedOTP,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       alert("OTP sent successfully!");
       setShowForgetPasswordModal(false);
       setShowOTPModal(true);
@@ -74,9 +81,7 @@ const Login = () => {
           password: newPassword,
         },
         {
-          headers: {
-            Authorization: `${token}`,
-          },
+          withCredentials: true,
         }
       );
       alert("Password updated successfully!");
@@ -109,14 +114,22 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post(`${URL}/auth/login`, {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        `${URL}/auth/login`,
+        {
+          username,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       setUsername("");
       setPassword("");
-      //store token in local storage
-      localStorage.setItem("warehousetoken", response.data.token);
+
+      console.log("login role: ", response.data.role);
+      setUserRole(response.data.role);
+
       alert("Login successful!");
       window.location.href = "/warehouseDashboard";
     } catch (error) {

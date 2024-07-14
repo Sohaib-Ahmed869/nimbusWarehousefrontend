@@ -4,6 +4,7 @@ import axios from "axios";
 import { CiMail } from "react-icons/ci";
 import { BiLock } from "react-icons/bi";
 import { Modal } from "react-bootstrap";
+import useStore from "../Store/store";
 
 const URL = process.env.REACT_APP_BACKEND_URL;
 const generateOTP = () => {
@@ -13,10 +14,9 @@ const CashierLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-
   const [showForgetPasswordModal, setShowForgetPasswordModal] = useState(false);
 
-  const [token, setToken] = useState();
+  const { userRole, setUserRole } = useStore();
 
   const handleLogin = async () => {
     if (!username || !password) {
@@ -25,14 +25,22 @@ const CashierLogin = () => {
     }
 
     try {
-      const response = await axios.post(`${URL}/auth/cashierLogin`, {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        `${URL}/auth/cashierLogin`,
+        {
+          username,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       setUsername("");
       setPassword("");
-      //store token in local storage
-      localStorage.setItem("cashiertoken", response.data.token);
+      console.log("Login Succes");
+      console.log("login role: ", response.data.role);
+      setUserRole(response.data.role);
+
       alert("Login successful!");
       window.location.href = "/cashierDashboard";
     } catch (error) {
@@ -41,8 +49,10 @@ const CashierLogin = () => {
   };
 
   return (
-    <div className={`login flex items-center justify-center min-h-screen w-full pb-10`}>
-      {(showForgetPasswordModal) && (
+    <div
+      className={`login flex items-center justify-center min-h-screen w-full pb-10`}
+    >
+      {showForgetPasswordModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
       )}
       <div className="login_container flex flex-col justify-center items-center w-1/3">
@@ -90,7 +100,10 @@ const CashierLogin = () => {
           Login
         </button>
 
-        <p className="text-sm text-gray-500 mt-5" onClick={() => window.location.href = "/login"}>
+        <p
+          className="text-sm text-gray-500 mt-5"
+          onClick={() => (window.location.href = "/login")}
+        >
           Are you a Manager?{" "}
           <span className="text-blue-400 cursor-pointer">Click Here</span>
         </p>

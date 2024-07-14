@@ -11,8 +11,6 @@ const URL = process.env.REACT_APP_BACKEND_URL;
 const CashierDelete = () => {
   const [cashiers, setCashiers] = useState([]);
 
-  const [token, setToken] = useState(localStorage.getItem("warehousetoken"));
-
   const [cashierDeleteModal, setCashierDeleteModal] = useState(false);
   const [updatePasswordModal, setUpdatePasswordModal] = useState(false);
   const [updatedPassword, setUpdatedPassword] = useState("");
@@ -21,13 +19,9 @@ const CashierDelete = () => {
   const [cashierId, setCashierId] = useState("");
 
   const handleDelete = async (id) => {
-    setToken(localStorage.getItem("warehousetoken"));
-
     try {
       const response = await axios.delete(`${URL}/cashiers/delete/${id}`, {
-        headers: {
-          Authorization: `${token}`,
-        },
+        withCredentials: true,
       });
 
       alert("Cashier account deleted successfully!");
@@ -39,13 +33,9 @@ const CashierDelete = () => {
   };
 
   const fetchCashiers = async () => {
-    setToken(localStorage.getItem("warehousetoken"));
-
     try {
       const response = await axios.get(`${URL}/cashiers`, {
-        headers: {
-          Authorization: `${token}`,
-        },
+        withCredentials: true,
       });
 
       setCashiers(response.data);
@@ -59,8 +49,6 @@ const CashierDelete = () => {
   }, []);
 
   const handleUpdatePassword = async () => {
-    setToken(localStorage.getItem("warehousetoken"));
-
     try {
       const response = await axios.put(
         `${URL}/cashiers/update-password/${cashierId}`,
@@ -68,9 +56,7 @@ const CashierDelete = () => {
           password: updatedPassword,
         },
         {
-          headers: {
-            Authorization: `${token}`,
-          },
+          withCredentials: true,
         }
       );
 
@@ -220,9 +206,8 @@ const CashierDelete = () => {
         onHide={() => setShowAddCashierModal(false)}
         centered
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl items-center justify-center flex flex-col shadow-xl z-50 bg-white p-10"
-                style={{height:"100%",overflowY:"scroll"}}
+        style={{ height: "100%", overflowY: "scroll" }}
       >
-
         <Modal.Header closeButton>
           <Modal.Title>
             <button

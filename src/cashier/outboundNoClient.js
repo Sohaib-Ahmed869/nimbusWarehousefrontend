@@ -24,18 +24,20 @@ const Outbound = () => {
 
   const getProducts = async () => {
     try {
-      const response = await axios.get(`${URL}/products`);
+      const response = await axios.get(`${URL}/products`, {
+        withCredentials: true,
+      });
       setAllProducts(response.data);
     } catch (error) {
       alert("Error: " + error.response.data.message);
     }
   };
 
-
-
   const getClients = async () => {
     try {
-      const response = await axios.get(`${URL}/clients`);
+      const response = await axios.get(`${URL}/clients`, {
+        withCredentials: true,
+      });
       setClients(response.data);
     } catch (error) {
       alert("Error: " + error.response.data.message);
@@ -86,18 +88,24 @@ const Outbound = () => {
   const onSubmitOutbound = async () => {
     const clientName = "no client";
     try {
-      await axios.put(`${URL}/products/outbound`, {
-        productNames: selectedProducts,
-        products: selectedProductsId,
-        quantityChange: quantityChanges,
-        reason,
-        clientName: clientName,
-        total: selectedProducts.reduce(
-          (acc, product, index) =>
-            acc + productRates[index] * quantityChanges[index],
-          0
-        ),
-      });
+      await axios.put(
+        `${URL}/products/outbound`,
+        {
+          productNames: selectedProducts,
+          products: selectedProductsId,
+          quantityChange: quantityChanges,
+          reason,
+          clientName: clientName,
+          total: selectedProducts.reduce(
+            (acc, product, index) =>
+              acc + productRates[index] * quantityChanges[index],
+            0
+          ),
+        },
+        {
+          withCredentials: true,
+        }
+      );
       alert("Outbound successful");
     } catch (error) {
       alert("Error: " + error.response.data.message);

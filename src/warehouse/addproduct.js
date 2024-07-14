@@ -19,11 +19,17 @@ const AddProduct = () => {
     }
 
     try {
-      const response = await axios.post(`${URL}/products/add`, {
-        name,
-        unit,
-        stock,
-      });
+      const response = await axios.post(
+        `${URL}/products/add`,
+        {
+          name,
+          unit,
+          stock,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       setProductname("");
       setUnit("");
       setStock(0);
@@ -36,7 +42,12 @@ const AddProduct = () => {
 
   const getProducts = async () => {
     try {
-      const response = await axios.get(`${URL}/products`);
+
+
+      const response = await axios.get(`${URL}/products`, {
+        withCredentials: true,
+      });
+
       setProducts(response.data);
     } catch (error) {
       alert("Error: " + error.response.data.message);

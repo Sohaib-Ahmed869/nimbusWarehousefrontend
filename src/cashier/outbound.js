@@ -24,7 +24,9 @@ const Outbound = () => {
 
   const getProducts = async () => {
     try {
-      const response = await axios.get(`${URL}/products`);
+      const response = await axios.get(`${URL}/products`, {
+        withCredentials: true,
+      });
       setAllProducts(response.data);
     } catch (error) {
       alert("Error: " + error.response.data.message);
@@ -32,10 +34,15 @@ const Outbound = () => {
   };
 
   const onClientChange = (e) => {
+    console.log("Client: ", e.target.value);
     setSelectedClient(e.target.value);
   };
 
   useEffect(() => {
+    if (selectedClient == "null" || selectedClient == null) {
+      setProducts([]);
+      return;
+    }
     if (selectedClient) {
       const clientselected = clients.find(
         (client) => client._id === selectedClient
@@ -47,7 +54,9 @@ const Outbound = () => {
 
   const getClients = async () => {
     try {
-      const response = await axios.get(`${URL}/clients`);
+      const response = await axios.get(`${URL}/clients`, {
+        withCredentials: true,
+      });
       setClients(response.data);
     } catch (error) {
       alert("Error: " + error.response.data.message);
@@ -64,8 +73,18 @@ const Outbound = () => {
     console.log(selectedProducts);
   }, [selectedProductsId, selectedProducts]);
 
-  const onAddProductToOutbound = (product) => {
+  const onAddProductToOutbound = (product, fromPopup) => {
     console.log(product);
+    console.log(selectedProductQuantity);
+    console.log(fromPopup);
+
+    // return if any null
+    if (fromPopup && (!product || !selectedProductQuantity)) {
+      console.log("inside if");
+      alert("Please select product and quantity");
+      return;
+    }
+
     //if the stock is less than the quantity, then return
     if (
       getProductQuantity(product) <
@@ -113,31 +132,64 @@ const Outbound = () => {
 
   const onSubmitOutbound = async () => {
     const clientName = getClientName(selectedClient);
+
+    if (!clientName || !selectedProductsId.length || !reason) {
+      alert("Please fill all the fields");
+      return;
+    }
+
+    // alert confirmation
+    if (
+      !window.confirm(
+        `Are you sure you want to submit the outbound for ${clientName}?`
+      )
+    ) {
+      return;
+    }
+
     try {
-      await axios.put(`${URL}/products/outbound`, {
-        productNames: selectedProducts,
-        products: selectedProductsId,
-        quantityChange: quantityChanges,
-        reason,
-        clientName: clientName,
-        total: selectedProducts.reduce(
+      await axios.put(
+        `${URL}/products/outbound`,
+        {
+          productNames: selectedProducts,
+          products: selectedProductsId,
+          quantityChange: quantityChanges,
+          reason,
+          clientName: clientName,
+          total: selectedProducts.reduce(
+            (acc, product, index) =>
+              acc +
+              getProductRate(selectedProductsId[index]) *
+                quantityChanges[index],
+            0
+          ),
+        },
+        { withCredentials: true }
+      );
+      alert("Outbound successful");
+
+      printReceipt2(
+        getClientName(selectedClient),
+        selectedProducts,
+        selectedProductsRate,
+        selectedProducts.reduce(
           (acc, product, index) =>
             acc +
             getProductRate(selectedProductsId[index]) * quantityChanges[index],
           0
         ),
-      });
-      alert("Outbound successful");
+        quantityChanges
+      );
+
       //clear the form
       setSelectedProductsId([]);
-
       setSelectedProducts([]);
       setQuantityChanges([]);
       setSelectedProductsRate([]);
       setReason("");
       getProducts();
     } catch (error) {
-      alert("Error: " + error.response.data.message);
+      alert("Error: " + error.response);
     }
   };
 
@@ -168,6 +220,8 @@ const Outbound = () => {
     GrandTotal,
     quantityChanges
   ) => {
+    console.log("Printing receipt");
+
     // Constructing receipt content
     let receiptContent = "";
     receiptContent +=
@@ -247,6 +301,8 @@ const Outbound = () => {
 
     // Triggering printing
     printWindow.print();
+
+    console.log("Receipt printed");
   };
 
   return (
@@ -307,7 +363,9 @@ const Outbound = () => {
                   <div className="table-cell p-2 border border-l-0">
                     <button
                       className="text-green-500"
-                      onClick={() => onAddProductToOutbound(product.productId)}
+                      onClick={() =>
+                        onAddProductToOutbound(product.productId, false)
+                      }
                     >
                       Add to Order
                     </button>
@@ -387,7 +445,7 @@ const Outbound = () => {
           ></textarea>
         </div>
 
-        <div className="flex items-center justify-center">
+        {/* <div className="flex items-center justify-center">
           <button
             className="bg-blue-500 text-white p-3 rounded-md mt-2 w-full hover:bg-blue-700"
             onClick={() =>
@@ -408,7 +466,7 @@ const Outbound = () => {
           >
             Print Receipt
           </button>
-        </div>
+        </div> */}
 
         <div className="flex items-center justify-center">
           <button
@@ -452,7 +510,7 @@ const Outbound = () => {
             />
             <button
               className="bg-blue-500 text-white p-2 rounded-md mt-2 w-full hover:bg-blue-700"
-              onClick={() => onAddProductToOutbound(selectedProduct)}
+              onClick={() => onAddProductToOutbound(selectedProduct, true)}
             >
               Add
             </button>

@@ -12,7 +12,9 @@ const AddProduct = () => {
 
   const getProducts = async () => {
     try {
-      const response = await axios.get(`${URL}/products`);
+      const response = await axios.get(`${URL}/products`, {
+        withCredentials: true,
+      });
       setProducts(response.data);
     } catch (error) {
       alert("Error: " + error.response.data.message);
@@ -28,7 +30,6 @@ const AddProduct = () => {
       <div className="flex flex-col justify-center p-5 border shadow-md rounded-xl">
         <div className="flex items-center justify-between p-5 w-full">
           <p className="text-2xl font-bold">Products</p>
-
         </div>
         <div className="table w-full p-5">
           <table className="w-full">

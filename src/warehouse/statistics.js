@@ -25,25 +25,29 @@ const Statistics = () => {
   };
 
   React.useEffect(() => {
-    axios.get(`${URL}/products/statistics`).then((response) => {
-      setAverageperClient(response.data.averagePerClient);
-      setMaxClient(response.data.maxClient);
-      setSalesThisMonth(response.data.salesThisMonth);
-      setSalesThisYear(response.data.salesThisYear);
-      setSalesToday(response.data.salesToday);
-      setTotalSales(response.data.totalSales);
-    });
+    axios
+      .get(`${URL}/products/statistics`, { withCredentials: true })
+      .then((response) => {
+        setAverageperClient(response.data.averagePerClient);
+        setMaxClient(response.data.maxClient);
+        setSalesThisMonth(response.data.salesThisMonth);
+        setSalesThisYear(response.data.salesThisYear);
+        setSalesToday(response.data.salesToday);
+        setTotalSales(response.data.totalSales);
+      });
   }, []);
 
   React.useEffect(() => {
-    axios.get(`${URL}/products/more-stats`).then((response) => {
-      setClientStatistics(response.data);
-      console.log(response.data);
-    });
+    axios
+      .get(`${URL}/products/more-stats`, { withCredentials: true })
+      .then((response) => {
+        setClientStatistics(response.data);
+        console.log(response.data);
+      });
   }, []);
 
   const getClients = () => {
-    axios.get(`${URL}/clients`).then((response) => {
+    axios.get(`${URL}/clients`, { withCredentials: true }).then((response) => {
       setClients(response.data);
     });
   };

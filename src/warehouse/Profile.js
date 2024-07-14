@@ -10,7 +10,6 @@ const Profile = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState("");
   const [branchName, setBranchName] = useState();
-  const [token, setToken] = useState();
   const [warehouseId, setWarehouseId] = useState();
 
   const [showUsernameModal, setShowUsernameModal] = useState(false);
@@ -18,16 +17,10 @@ const Profile = () => {
   const [showBranchNameModal, setShowBranchNameModal] = useState(false);
 
   const getWarehouse = async () => {
-    //first get token from local storage
-    const token = localStorage.getItem("warehousetoken");
-    setToken(token);
 
-    //now send the token to the server to get the warehouse details
     try {
       const response = await axios.get(`${URL}/warehouses/get-warehouse`, {
-        headers: {
-          Authorization: `${token}`,
-        },
+        withCredentials: true,
       });
       setWarehouse(response.data);
       setWarehouseId(response.data._id);
@@ -47,14 +40,12 @@ const Profile = () => {
     }
     try {
       const response = await axios.put(
-        `${URL}/warehouses/update-username/${warehouseId}`,
+        `${URL}/warehouses/update-username`,
         {
           username: username,
         },
         {
-          headers: {
-            Authorization: `${token}`,
-          },
+          withCredentials: true,
         }
       );
       alert("Username updated successfully!");
@@ -73,14 +64,12 @@ const Profile = () => {
     try {
       console.log(password);
       const response = await axios.put(
-        `${URL}/warehouses/update-password/${warehouseId}`,
+        `${URL}/warehouses/update-password`,
         {
           password: password,
         },
         {
-          headers: {
-            Authorization: `${token}`,
-          },
+          withCredentials: true,
         }
       );
       alert("Password updated successfully!");
@@ -98,14 +87,12 @@ const Profile = () => {
     }
     try {
       const response = await axios.put(
-        `${URL}/warehouses/update-branchname/${warehouseId}`,
+        `${URL}/warehouses/update-branchname`,
         {
           branchname: branchName,
         },
         {
-          headers: {
-            Authorization: `${token}`,
-          },
+          withCredentials: true,
         }
       );
       alert("Branch name updated successfully!");

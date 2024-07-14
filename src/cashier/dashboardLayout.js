@@ -1,3 +1,4 @@
+import useStore from "../Store/store";
 import React, { useEffect, useState } from "react";
 import Logo from "../Assets/Logo.png";
 import dashboard from "../Assets/dashboard.png";
@@ -24,20 +25,26 @@ import Dashboard from "../warehouse/dashboard";
 import OutboundNoClient from "./outboundNoClient";
 
 const CashierDashboardLayout = () => {
-  const [warehouseToken, setWarehouseToken] = useState(
-    localStorage.getItem("cashiertoken") || null
-  );
   const [activeOption, setActiveOption] = useState("Dashboard");
+  const { userRole, setUserRole } = useStore();
+
   const onLogout = () => {
-    localStorage.removeItem("cashiertoken");
+    setUserRole(null);
     window.location.href = "/login";
   };
 
   useEffect(() => {
-    if (!warehouseToken) {
+    setShowSignInModal(false);
+    console.log("userRole", userRole);
+    console.log("show pop: ", showSignInModal);
+    if (userRole == null || userRole == "null" || userRole != "cashier") {
+      console.log("inside if");
+      console.log("userRole", userRole);
+      console.log("show pop: ", showSignInModal);
       setShowSignInModal(true);
+      return;
     }
-  }, [warehouseToken]);
+  }, [userRole]);
 
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
@@ -50,7 +57,7 @@ const CashierDashboardLayout = () => {
       {showSignInModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
       )}
-      {warehouseToken && (
+      {userRole != null && userRole != "null" && userRole == "cashier" && (
         <div className="w-1/6 bg-white border-r border-black">
           <div className="w-full flex items-center justify-center">
             <img src={Logo} alt="logo" className="w-20 m-5" />
@@ -180,7 +187,9 @@ const CashierDashboardLayout = () => {
           </Modal.Body>
         </Modal>
 
-        {warehouseToken &&
+        {userRole != null &&
+          userRole != "null" &&
+          userRole == "cashier" &&
           {
             Dashboard: <Dashboard />,
             Inbound: <Outbound />,

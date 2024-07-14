@@ -3,7 +3,6 @@ import axios from "axios";
 import { FiCornerRightDown } from "react-icons/fi";
 const URL = process.env.REACT_APP_BACKEND_URL;
 
-
 const Inbound = () => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState("");
@@ -12,9 +11,13 @@ const Inbound = () => {
   const [reason, setReason] = useState("");
 
   useEffect(() => {
-    axios.get(`${URL}/products`).then((response) => {
-      setProducts(response.data);
-    });
+    axios
+      .get(`${URL}/products`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setProducts(response.data);
+      });
   }, []);
 
   const addInbound = async () => {
@@ -28,6 +31,9 @@ const Inbound = () => {
         {
           quantity,
           reason,
+        },
+        {
+          withCredentials: true,
         }
       );
       setSelectedProduct("");

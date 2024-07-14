@@ -14,21 +14,13 @@ const Billing = () => {
   const [rent_due, setRent_due] = useState();
   const [rent_paid, setRent_paid] = useState(false);
 
-  const [token, setToken] = useState();
-
   const getWarehouse = async () => {
-    //first get token from local storage
-    const token = localStorage.getItem("warehousetoken");
-    setToken(token);
 
-    //now send the token to the server to get the warehouse details
     try {
       const response = await axios.get(
         `${URL}/warehouses/warehouse`,
         {
-          headers: {
-            Authorization: `${token}`,
-          },
+          withCredentials: true,
         }
       );
       setWarehouse(response.data);

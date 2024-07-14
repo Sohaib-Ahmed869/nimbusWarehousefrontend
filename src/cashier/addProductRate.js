@@ -13,15 +13,23 @@ const AddProductRate = () => {
   const [rate, setRate] = useState(0);
 
   useEffect(() => {
-    axios.get(`${URL}/clients`).then((response) => {
-      setClients(response.data);
-    });
+    axios
+      .get(`${URL}/clients`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setClients(response.data);
+      });
   }, []);
 
   useEffect(() => {
-    axios.get(`${URL}/products`).then((response) => {
-      setProducts(response.data);
-    });
+    axios
+      .get(`${URL}/products`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setProducts(response.data);
+      });
   }, []);
 
   const getProductName = (productId) => {
@@ -37,7 +45,10 @@ const AddProductRate = () => {
     }
     try {
       const response = await axios.get(
-        `${URL}/clients/product_rates/${selectedClient}`
+        `${URL}/clients/product_rates/${selectedClient}`,
+        {
+          withCredentials: true,
+        }
       );
       setClientProductRates(response.data);
       console.log(response.data);

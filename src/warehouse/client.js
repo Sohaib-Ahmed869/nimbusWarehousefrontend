@@ -20,11 +20,17 @@ const Clients = () => {
     }
 
     try {
-      const response = await axios.post(`${URL}/clients/add`, {
-        name,
-        address,
-        phone,
-      });
+      const response = await axios.post(
+        `${URL}/clients/add`,
+        {
+          name,
+          address,
+          phone,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       setName("");
       setAddress("");
       setPhone("");
@@ -38,7 +44,9 @@ const Clients = () => {
 
   const getClients = async () => {
     try {
-      const response = await axios.get(`${URL}/clients`);
+      const response = await axios.get(`${URL}/clients`, {
+        withCredentials: true,
+      });
       setClients(response.data);
     } catch (error) {
       alert("Error: " + error.response.data.message);

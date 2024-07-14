@@ -24,12 +24,18 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post(`${URL}/auth/signup`, {
-        email,
-        username,
-        password,
-        branchname,
-      });
+      const response = await axios.post(
+        `${URL}/auth/signup`,
+        {
+          email,
+          username,
+          password,
+          branchname,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
       alert("Signup successful!");
       window.location.href = "/login";
