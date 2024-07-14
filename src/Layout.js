@@ -8,7 +8,6 @@ import DashboardLayout from "./warehouse/dashboardLayout";
 import CashierLogin from "./CashierLogin/page";
 import CashierDashboardLayout from "./cashier/dashboardLayout";
 
-
 const Layout = () => {
   return (
     <Routes>
