@@ -107,39 +107,39 @@ const Outbound = () => {
   };
 
   const onSubmitOutbound = async () => {
-    // const clientName = "no client";
+    const clientName = "no client";
     try {
-    //   await axios.put(
-    //     `${URL}/products/outbound`,
-    //     {
-    //       productNames: selectedProducts,
-    //       products: selectedProductsId,
-    //       quantityChange: quantityChanges,
-    //       reason,
-    //       clientName: clientName,
-    //       total: selectedProducts.reduce(
-    //         (acc, product, index) =>
-    //           acc + productRates[index] * quantityChanges[index],
-    //         0
-    //       ),
-    //     },
-    //     {
-    //       withCredentials: true,
-    //     }
-    //   );
-    //   alert("Outbound successful");
+      await axios.put(
+        `${URL}/products/outbound`,
+        {
+          productNames: selectedProducts,
+          products: selectedProductsId,
+          quantityChange: quantityChanges,
+          reason,
+          clientName: clientName,
+          total: selectedProducts.reduce(
+            (acc, product, index) =>
+              acc + productRates[index] * quantityChanges[index],
+            0
+          ),
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      alert("Outbound successful");
 
-    //   printReceipt2(
-    //     selectedClient,
-    //     selectedProducts,
-    //     productRates,
-    //     selectedProducts.reduce(
-    //       (acc, product, index) =>
-    //         acc + productRates[index] * quantityChanges[index],
-    //       0
-    //     ),
-    //     quantityChanges
-    //   );
+      printReceipt2(
+        selectedClient,
+        selectedProducts,
+        productRates,
+        selectedProducts.reduce(
+          (acc, product, index) =>
+            acc + productRates[index] * quantityChanges[index],
+          0
+        ),
+        quantityChanges
+      );
 
       console.log("Clearing form");
       // clear the form
