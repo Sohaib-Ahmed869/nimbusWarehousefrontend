@@ -231,11 +231,9 @@ const Outbound = () => {
     receiptContent +=
       "<div><strong>------------------------------ Receipt ------------------------------</strong></div>";
     receiptContent +=
-      "<div style=' margin-top:30px, font-weight:bold'>Shop#01, Ground Floor, Phantom Mall, I-8 Markaz, Islamabad</div>";
+      "<div style=' margin-top:30px, font-weight:bold'>I-11 Mandi Mor</div>";
     receiptContent +=
       "<div style=' margin-top:10px, font-weight:bold'>051 2719280</div>";
-    receiptContent +=
-      "<div style=' margin-top:10px, font-weight:bold'>NTN Number: C251459-8</div>";
     receiptContent +=
       "<div style=' margin-top:30px'>Customer: " + customerName + "</div>";
     receiptContent +=
