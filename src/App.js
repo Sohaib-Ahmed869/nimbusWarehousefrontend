@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import Layout from "./Layout";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
