@@ -27,6 +27,7 @@ const Outbound = () => {
       const response = await axios.get(`${URL}/products`, {
         withCredentials: true,
       });
+      console.log("All Products:", response.data);
       setAllProducts(response.data);
     } catch (error) {
       alert("Error: " + error.response.data.message);
@@ -45,6 +46,10 @@ const Outbound = () => {
   };
 
   useEffect(() => {
+    console.log(reason); // This will log the updated state
+  }, [reason]);
+
+  useEffect(() => {
     getClients();
     getProducts();
   }, [products, selectedClient]);
@@ -54,7 +59,19 @@ const Outbound = () => {
     console.log(selectedProducts);
   }, [selectedProductsId, selectedProducts]);
 
-  const onAddProductToOutbound = (product) => {
+  const onAddProductToOutbound = (product, fromPopup) => {
+    console.log(product, fromPopup);
+    if (fromPopup) {
+      product = getProduct(product);
+      console.log("New prod:", product);
+    }
+
+    // return if any null
+    if (fromPopup && (!product || !selectedProductQuantity)) {
+      console.log("inside if");
+      alert("Please select product and quantity");
+      return;
+    }
     //if product already exists in the selected products, then just increase the quantity
     if (selectedProductsId.includes(product)) {
       const index = selectedProductsId.indexOf(product);
@@ -85,28 +102,55 @@ const Outbound = () => {
     console.log(newQuantityChanges);
   };
 
+  const getProduct = (id) => {
+    return allProducts.find((product) => product._id === id);
+  };
+
   const onSubmitOutbound = async () => {
-    const clientName = "no client";
+    // const clientName = "no client";
     try {
-      await axios.put(
-        `${URL}/products/outbound`,
-        {
-          productNames: selectedProducts,
-          products: selectedProductsId,
-          quantityChange: quantityChanges,
-          reason,
-          clientName: clientName,
-          total: selectedProducts.reduce(
-            (acc, product, index) =>
-              acc + productRates[index] * quantityChanges[index],
-            0
-          ),
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      alert("Outbound successful");
+    //   await axios.put(
+    //     `${URL}/products/outbound`,
+    //     {
+    //       productNames: selectedProducts,
+    //       products: selectedProductsId,
+    //       quantityChange: quantityChanges,
+    //       reason,
+    //       clientName: clientName,
+    //       total: selectedProducts.reduce(
+    //         (acc, product, index) =>
+    //           acc + productRates[index] * quantityChanges[index],
+    //         0
+    //       ),
+    //     },
+    //     {
+    //       withCredentials: true,
+    //     }
+    //   );
+    //   alert("Outbound successful");
+
+    //   printReceipt2(
+    //     selectedClient,
+    //     selectedProducts,
+    //     productRates,
+    //     selectedProducts.reduce(
+    //       (acc, product, index) =>
+    //         acc + productRates[index] * quantityChanges[index],
+    //       0
+    //     ),
+    //     quantityChanges
+    //   );
+
+      console.log("Clearing form");
+      // clear the form
+      setSelectedProductsId([]);
+      setSelectedProducts([]);
+      setQuantityChanges([]);
+      setProductRates([]);
+      setReason("");
+      setSelectedClient("");
+      console.log(reason);
+      
     } catch (error) {
       alert("Error: " + error.response.data.message);
     }
@@ -261,7 +305,7 @@ const Outbound = () => {
                   <div className="table-cell p-2 border border-l-0">
                     <button
                       className="text-green-500"
-                      onClick={() => onAddProductToOutbound(product)}
+                      onClick={() => onAddProductToOutbound(product, false)}
                     >
                       Add to Order
                     </button>
@@ -289,7 +333,7 @@ const Outbound = () => {
               {selectedProducts.map((product, index) => (
                 <div
                   className="table-row hover:cursor-pointer hover:bg-gray-100"
-                  key={product._id}
+                  key={selectedProductsId[index]}
                 >
                   <div className="table-cell p-2 border border-r-0">
                     {product}
@@ -344,7 +388,7 @@ const Outbound = () => {
           ></textarea>
         </div>
 
-        <div className="flex items-center justify-center">
+        {/* <div className="flex items-center justify-center">
           <button
             className="bg-blue-500 text-white p-3 rounded-md mt-2 w-full hover:bg-blue-700"
             onClick={() =>
@@ -363,7 +407,7 @@ const Outbound = () => {
           >
             Print Receipt
           </button>
-        </div>
+        </div> */}
 
         <div className="flex items-center justify-center">
           <button
@@ -393,8 +437,8 @@ const Outbound = () => {
               onChange={(e) => setSelectedProduct(e.target.value)}
             >
               <option value={null}>Select Product</option>
-              {products.map((product) => (
-                <option key={product.productId} value={product.productId}>
+              {allProducts.map((product) => (
+                <option key={product._id} value={product._id}>
                   {product.name}
                 </option>
               ))}
@@ -407,7 +451,7 @@ const Outbound = () => {
             />
             <button
               className="bg-blue-500 text-white p-2 rounded-md mt-2 w-full hover:bg-blue-700"
-              onClick={() => onAddProductToOutbound(selectedProduct)}
+              onClick={() => onAddProductToOutbound(selectedProduct, true)}
             >
               Add
             </button>

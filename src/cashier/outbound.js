@@ -74,7 +74,7 @@ const Outbound = () => {
   }, [selectedProductsId, selectedProducts]);
 
   const onAddProductToOutbound = (product, fromPopup) => {
-    console.log(product);
+    console.log(product, fromPopup);
     console.log(selectedProductQuantity);
     console.log(fromPopup);
 

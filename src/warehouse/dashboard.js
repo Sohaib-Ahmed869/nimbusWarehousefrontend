@@ -75,7 +75,6 @@ const Dashboard = () => {
         withCredentials: true,
       });
       setOutboundLogs(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -103,6 +102,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     getProducts();
+  }, []);
+  
+  useEffect(() => {
     const stock = products.reduce((acc, product) => acc + product.stock, 0);
     setTotalStock(stock);
   }, [products]);

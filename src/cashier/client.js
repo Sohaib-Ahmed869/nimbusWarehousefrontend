@@ -24,7 +24,7 @@ const Clients = () => {
 
   useEffect(() => {
     getClients();
-  }, [clients]);
+  }, []);
 
   return (
     <div className="flex flex-col w-full min-h-screen p-5">
