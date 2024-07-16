@@ -22,6 +22,8 @@ const Outbound = () => {
   const [showAddProductToOutbound, setShowAddProductToOutbound] =
     useState(false);
 
+  const [totalPrice, setTotalPrice] = useState(null);
+
   const getProducts = async () => {
     try {
       const response = await axios.get(`${URL}/products`, {
@@ -48,6 +50,16 @@ const Outbound = () => {
   useEffect(() => {
     console.log(reason); // This will log the updated state
   }, [reason]);
+
+  useEffect(() => {
+    // calculate total price
+    const total = selectedProducts.reduce(
+      (acc, product, index) =>
+        acc + productRates[index] * quantityChanges[index],
+      0
+    );
+    setTotalPrice(total);
+  }, [productRates, quantityChanges]);
 
   useEffect(() => {
     getClients();
@@ -107,7 +119,18 @@ const Outbound = () => {
   };
 
   const onSubmitOutbound = async () => {
-    const clientName = "no client";
+    if (
+      !selectedClient ||
+      selectedProducts.length === 0 ||
+      !totalPrice ||
+      !reason
+    ) {
+      alert("Please fill all the fields");
+      return;
+    }
+
+    const clientName = selectedClient;
+
     try {
       await axios.put(
         `${URL}/products/outbound`,
@@ -150,7 +173,6 @@ const Outbound = () => {
       setReason("");
       setSelectedClient("");
       console.log(reason);
-      
     } catch (error) {
       alert("Error: " + error.response.data.message);
     }
@@ -371,13 +393,7 @@ const Outbound = () => {
         </div>
         <div className="flex items-center justify-between p-5 w-full">
           <p className="text-2xl font-bold">Total Price</p>
-          <p className="text-2xl font-bold">
-            {selectedProducts.reduce(
-              (acc, product, index) =>
-                acc + productRates[index] * quantityChanges[index],
-              0
-            )}
-          </p>
+          <p className="text-2xl font-bold">{totalPrice}</p>
         </div>
 
         <div className="items-center justify-between p-5 w-full">

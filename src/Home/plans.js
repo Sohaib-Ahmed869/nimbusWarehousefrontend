@@ -3,19 +3,19 @@ import { FaCircle } from "react-icons/fa";
 const plans = [
   {
     name: "Warehouse Management",
-    price: "7,499/-",
+    price: "$46.99",
     with_pos: "No",
     with_warehouse: "Yes",
   },
   {
     name: "Point of Sale System",
-    price: "7,499/-",
+    price: "$46.99",
     with_pos: "Yes",
     with_warehouse: "No",
   },
   {
     name: "Premium Plan",
-    price: "19,999/-",
+    price: "$79.99",
     with_pos: "Yes",
     with_warehouse: "Yes",
   },
@@ -39,7 +39,7 @@ const Membership = () => {
           >
             <h1 className="text-2xl text-gray-500 font-bold">{plan.name}</h1>
             <h1 className="text-4xl text-blue-400 font-bold italic mt-10">
-              PKR {plan.price}
+              {plan.price}
             </h1>
 
             <p className="text-gray-500 mt-5">

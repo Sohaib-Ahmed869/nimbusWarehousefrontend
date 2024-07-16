@@ -21,6 +21,7 @@ import { Line } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import { easingEffects } from "chart.js/helpers";
 import "./dashboard.css";
+import moment from 'moment-timezone';
 const URL = process.env.REACT_APP_BACKEND_URL;
 
 ChartJS.register(
@@ -46,6 +47,8 @@ const Dashboard = () => {
   const [inboundLogs, setInboundLogs] = useState([]);
   const [outboundLogs, setOutboundLogs] = useState([]);
   const [totalSales, setTotalSales] = useState(0);
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
 
   const getProducts = async () => {
     try {
@@ -60,9 +63,12 @@ const Dashboard = () => {
 
   const getAllInboundLogs = async () => {
     try {
-      const response = await axios.get(`${URL}/products/inbound-logs`, {
+      const response = await axios.get(`${URL}/products/inbound-logs?timezone=${userTimeZone}`, {
         withCredentials: true,
       });
+
+      // sort on base of date
+      response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
       setInboundLogs(response.data);
     } catch (error) {
       console.error(error);
@@ -71,9 +77,12 @@ const Dashboard = () => {
 
   const getAllOutboundLogs = async () => {
     try {
-      const response = await axios.get(`${URL}/products/outbound-logs`, {
+      const response = await axios.get(`${URL}/products/outbound-logs?timezone=${userTimeZone}`, {
         withCredentials: true,
       });
+
+      // sort on base of date
+      response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
       setOutboundLogs(response.data);
     } catch (error) {
       console.error(error);
@@ -241,7 +250,7 @@ const Dashboard = () => {
   }, [outboundLogs, products]);
 
   return (
-    <div className="p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard">
+    <div className="p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard no-scrollbar">
       <h1 className="text-3xl font-semibold">Dashboard</h1>
       <p className="text-gray-500">
         Below is the summary of your team activity
@@ -347,7 +356,7 @@ const Dashboard = () => {
         </table>
       </div> */}
       <div className="flex flex-row gap-5 mt-10 pb-10 cards">
-        <div className="w-1/2 border border-gray-400 rounded-xl p-2 h-96 overflow-y-auto card">
+        <div className="w-1/2 border border-gray-400 rounded-xl p-2 h-96 overflow-y-auto card no-scrollbar">
           <h1 className="text-xl font-semibold mt-2 text-center">
             Inbound Logs
           </h1>
@@ -393,7 +402,7 @@ const Dashboard = () => {
             </div>
           ))}
         </div>
-        <div className="w-1/2 border border-gray-400 rounded-xl p-2 h-96 overflow-y-auto card">
+        <div className="w-1/2 border border-gray-400 rounded-xl p-2 h-96 overflow-y-auto card no-scrollbar">
           <h1 className="text-xl font-semibold mt-2 text-center">
             Outbound Logs
           </h1>
@@ -413,7 +422,7 @@ const Dashboard = () => {
                       <div className="flex flex-row gap-5 mt-2 items-center">
                         <div className="flex flex-col w-full">
                           <p className=" text-gray-800 text-md text-left w-full">
-                            Outbound Log Created
+                            {message.clientName}
                           </p>
                           <p className=" text-gray-500 text-sm text-left">
                             Note: {message.reason}

@@ -8,12 +8,17 @@ const Navbar = () => {
       <div className="flex items-center gap-10 ml-10">
         <img src={Logo} alt="Logo" className="w-12" />
         <h1 className="text-2xl font-bold">
-          Nimbus<span className="text-blue-500">360</span>Warehouse Solutions
+          Nimbus<span className="text-blue-500">360</span>Solutions
         </h1>
       </div>
       <ul className="navbar flex justify-between items-center">
         <li>
-          <Link to="/login">Login</Link>
+          <Link
+            to="/login"
+            className="bg-blue-500 text-white px-5 py-2 mr-5 hover:bg-blue-600"
+          >
+            Login
+          </Link>
         </li>
       </ul>
     </nav>

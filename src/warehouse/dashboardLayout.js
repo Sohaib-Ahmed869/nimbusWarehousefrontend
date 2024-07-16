@@ -5,7 +5,7 @@ import dashboard from "../Assets/dashboard.png";
 import { FiBarChart } from "react-icons/fi";
 import { BiPlus } from "react-icons/bi";
 import { FiSlack } from "react-icons/fi";
-import { FiCornerRightDown } from "react-icons/fi";
+import { FiCornerRightDown, FiCornerRightUp } from "react-icons/fi";
 import { FiUsers } from "react-icons/fi";
 import { FaCcMastercard } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
@@ -19,6 +19,8 @@ import { BsList } from "react-icons/bs";
 import Dashboard from "./dashboard";
 import AddProduct from "./addproduct";
 import Inbound from "./inbound";
+import Outbound from "../cashier/outbound";
+import OutboundNoClient from "../cashier/outboundNoClient";
 import Clients from "./client";
 import AddProductRate from "./addProductRate";
 import Settings from "./settings";
@@ -128,6 +130,24 @@ const DashboardLayout = () => {
               </div>
               <div
                 className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                  activeOption === "Outbound" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => setActiveOption("Outbound")}
+              >
+                <FiCornerRightUp className="w-4 mr-2" />
+                <p className="">Outbound</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                  activeOption === "OutboundNoClient" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => setActiveOption("OutboundNoClient")}
+              >
+                <MdOutlineRecordVoiceOver className="w-4 mr-2" />
+                <p className="">Outbound No Client</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
                   activeOption === "Clients" ? "bg-gray-300" : ""
                 }`}
                 onClick={() => setActiveOption("Clients")}
@@ -203,7 +223,7 @@ const DashboardLayout = () => {
         <div
           className={` bg-white border-r w-1/6 border-black sidebar ${
             !sidebarVisible ? "hidden" : "" || mobileView ? "hidden" : ""
-          } h-screen`}
+          } h-screen max-h-screen overflow-y-auto no-scrollbar`}
         >
           <div className="w-full flex items-center justify-center">
             <img src={Logo} alt="logo" className="w-20 m-5" />
@@ -238,6 +258,24 @@ const DashboardLayout = () => {
             >
               <FiCornerRightDown className="w-4 mr-2" />
               <p className="">Inbound</p>
+            </div>
+            <div
+              className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                activeOption === "Outbound" ? "bg-gray-300" : ""
+              }`}
+              onClick={() => setActiveOption("Outbound")}
+            >
+              <FiCornerRightUp className="w-4 mr-2" />
+              <p className="">Outbound</p>
+            </div>
+            <div
+              className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                activeOption === "OutboundNoClient" ? "bg-gray-300" : ""
+              }`}
+              onClick={() => setActiveOption("OutboundNoClient")}
+            >
+              <MdOutlineRecordVoiceOver className="w-4 mr-2" />
+              <p className="">Outbound No Client</p>
             </div>
             <div
               className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
@@ -369,6 +407,8 @@ const DashboardLayout = () => {
             Dashboard: <Dashboard />,
             Statistics: <Statistics />,
             Inbound: <Inbound />,
+            Outbound: <Outbound />,
+            OutboundNoClient: <OutboundNoClient />,
             Clients: <Clients />,
             Schedule: <AddProductRate />,
             "Add Product": <AddProduct />,

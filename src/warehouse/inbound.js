@@ -21,7 +21,7 @@ const Inbound = () => {
   }, []);
 
   const addInbound = async () => {
-    if (!selectedProduct || !quantity) {
+    if (!selectedProduct || !quantity || !reason) {
       alert("Please fill all the fields!");
       return;
     }
@@ -38,6 +38,7 @@ const Inbound = () => {
       );
       setSelectedProduct("");
       setQuantity(0);
+      setReason("");
       alert("Inbound added successfully!");
     } catch (error) {
       alert("Error: " + error.response.data.message);

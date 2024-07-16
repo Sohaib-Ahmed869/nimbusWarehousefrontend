@@ -5,7 +5,7 @@ import dashboard from "../Assets/dashboard.png";
 import { FiBarChart } from "react-icons/fi";
 import { BiPlus } from "react-icons/bi";
 import { FiSlack } from "react-icons/fi";
-import { FiCornerRightUp } from "react-icons/fi";
+import { FiCornerRightUp, FiCornerRightDown } from "react-icons/fi";
 import { FiUsers } from "react-icons/fi";
 import { FaCcMastercard } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
@@ -23,6 +23,7 @@ import AddProduct from "./addproduct";
 import Outbound from "./outbound";
 import Dashboard from "../warehouse/dashboard";
 import OutboundNoClient from "./outboundNoClient";
+import Inbound from "../warehouse/inbound";
 
 const CashierDashboardLayout = () => {
   const [activeOption, setActiveOption] = useState("Dashboard");
@@ -75,12 +76,20 @@ const CashierDashboardLayout = () => {
               <FiBarChart className="w-4 mr-2" />
               <p>Dashboard</p>
             </div>
-
             <div
               className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
                 activeOption === "Inbound" ? "bg-gray-300" : ""
               }`}
               onClick={() => setActiveOption("Inbound")}
+            >
+              <FiCornerRightDown className="w-4 mr-2" />
+              <p className="">Inbound</p>
+            </div>
+            <div
+              className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                activeOption === "Outbound" ? "bg-gray-300" : ""
+              }`}
+              onClick={() => setActiveOption("Outbound")}
             >
               <FiCornerRightUp className="w-4 mr-2" />
               <p className="">Outbound</p>
@@ -192,13 +201,14 @@ const CashierDashboardLayout = () => {
           userRole == "cashier" &&
           {
             Dashboard: <Dashboard />,
-            Inbound: <Outbound />,
+            Inbound: <Inbound />,
+            Outbound: <Outbound />,
+            OutBoundNoClient: <OutboundNoClient />,
             Clients: <Clients />,
             Schedule: <AddProductRate />,
             "Add Product": <AddProduct />,
             Profile: <p>Profile</p>,
             Billing: <p>Billing</p>,
-            OutBoundNoClient: <OutboundNoClient />,
           }[activeOption]}
       </div>
     </div>
