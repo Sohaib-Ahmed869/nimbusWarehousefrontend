@@ -22,17 +22,17 @@ const plans = [
 ];
 const Membership = () => {
   return (
-    <div className="justify-center items-center flex flex-col ml-10 pt-0 p-20">
+    <div className="justify-center items-center flex flex-col pt-0 p-10 md:p-20">
       <h1 className="text-sm font-bold italic" style={{ letterSpacing: "7px" }}>
         PRICING TABLES
       </h1>
       <h1 className="text-3xl mt-2 italic font-semibold text-gray-600">
         MEMBERSHIP PLANS
       </h1>
-      <div className="flex flex-row justify-between mt-10 gap-5 text-center ">
+      <div className="flex flex-col md:flex-row justify-between mt-10 gap-5 text-center ">
         {plans.map((plan) => (
           <div
-            className={`flex flex-col items-center justify-center p-10 border hover:bg-gray-50 border-black hover:shadow-xl cursor-pointer ${
+            className={`flex flex-col items-center justify-center p-5 md:p-10 border hover:bg-gray-50 border-black hover:shadow-xl cursor-pointer ${
               plan.name === "Premium Plan" ? "premium" : ""
             }`}
             key={plan.name}

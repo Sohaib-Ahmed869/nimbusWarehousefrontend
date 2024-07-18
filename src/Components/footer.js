@@ -15,28 +15,28 @@ import contactSupport from "../Assets/contactSupport.png";
 const Footer = () => {
   return (
     <div className="footer bg-black text-white flex-col items-center p-3">
-      <div className="flex flex-row items-center justify-between p-20 pb-0">
+      <div className="flex flex-col md:flex-row items-center justify-between p-5 md:p-20 md:pb-0">
         <img src={Logo} alt="Logo" className="h-24 p-4" />
         <div className="flex flex-col border-l-4 border-blue-400 pl-3">
-          <h1 className="text-2xl font-bold text-white-900">
+          <h1 className="text-lg md:text-2xl font-bold text-white-900">
             We are here to help you
           </h1>
-          <p className="text-lg text-gray-400">
+          <p className="text-md md:text-lg text-gray-400">
             The best way to get in touch with us is by email.<br></br> We are
             here to answer any questions you may have about Nimbus360.
           </p>
         </div>
       </div>
 
-      <div className="flex flex-row items-center justify-between p-20">
-        <div className="flex flex-col w-1/4">
-          <h1 className="text-2xl font-bold text-white-900">About Nimbus360</h1>
+      <div className="flex flex-col md:flex-row items-center justify-between p-5 md:p-20 gap-5 md:gap-0">
+        <div className="flex flex-col w-full md:w-1/4">
+          <h1 className="text-lg md:text-2xl font-bold text-white-900">About Nimbus360</h1>
           <img
             src={decorFooter}
             alt="decorFooter"
-            className="mb-3 h-3 w-8 mt-3"
+            className="mb-3 h-3 w-8 md:mt-3"
           />
-          <p className="text-lg text-gray-400">
+          <p className="text-md md:text-lg text-gray-400">
             We Tailor the Software Needs of your Restaurant, Retail, and
             Warehouse
           </p>
@@ -68,46 +68,46 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="flex flex-col w-1/4">
-          <h1 className="text-2xl font-bold text-white-900">Useful Links</h1>
+        <div className="flex flex-col w-full md:w-1/4">
+          <h1 className="text-lg md:text-2xl font-bold text-white-900">Useful Links</h1>
           <img
             src={decorFooter}
             alt="decorFooter"
-            className="mb-3 h-3 w-8 mt-3"
+            className="mb-3 h-3 w-8 md:mt-3"
           />
-          <ul className="text-lg text-gray-400 flex flex-col leading-10 list-disc list-inside">
-            <li className="cursor-pointer">About Us</li>
-            <li className="cursor-pointer">Latest News</li>
-            <li className="cursor-pointer">Our Process</li>
-            <li className="cursor-pointer">Terms & Conditions</li>
-            <li className="cursor-pointer">Protections & Coverages</li>
+          <ul className="text-md md:text-lg text-gray-400 flex flex-col leading-10 list-disc list-inside">
+            <li className="cursor-pointer mt-[-10px] md:mt-0">About Us</li>
+            <li className="cursor-pointer mt-[-10px] md:mt-0">Latest News</li>
+            <li className="cursor-pointer mt-[-10px] md:mt-0">Our Process</li>
+            <li className="cursor-pointer mt-[-10px] md:mt-0">Terms & Conditions</li>
+            <li className="cursor-pointer mt-[-10px] md:mt-0">Protections & Coverages</li>
           </ul>
         </div>
 
-        <div className="flex flex-col w-1/4">
-          <h1 className="text-2xl font-bold text-white-900">Explore More</h1>
+        <div className="flex flex-col w-full md:w-1/4">
+          <h1 className="text-lg md:text-2xl font-bold text-white-900">Explore More</h1>
           <img
             src={decorFooter}
             alt="decorFooter"
-            className="mb-3 h-3 w-8 mt-3"
+            className="mb-3 h-3 w-8 md:mt-3"
           />
-          <ul className="text-lg text-gray-400 flex flex-col leading-10 list-disc list-inside">
-            <li className="cursor-pointer">Signup or Register</li>
-            <li className="cursor-pointer">Get Nimbus360</li>
-            <li className="cursor-pointer">Nimbus Pricing</li>
-            <li className="cursor-pointer">Quick User Guide</li>
-            <li className="cursor-pointer">Read FAQ's</li>
+          <ul className="text-md md:text-lg text-gray-400 flex flex-col leading-10 list-disc list-inside">
+            <li className="cursor-pointer mt-[-10px] md:mt-0">Signup or Register</li>
+            <li className="cursor-pointer mt-[-10px] md:mt-0">Get Nimbus360</li>
+            <li className="cursor-pointer mt-[-10px] md:mt-0">Nimbus Pricing</li>
+            <li className="cursor-pointer mt-[-10px] md:mt-0">Quick User Guide</li>
+            <li className="cursor-pointer mt-[-10px] md:mt-0">Read FAQ's</li>
           </ul>
         </div>
 
-        <div className="flex flex-col w-1/4">
-          <h1 className="text-2xl font-bold text-white-900">Get in Touch</h1>
+        <div className="flex flex-col w-full md:w-1/4">
+          <h1 className="text-lg md:text-2xl font-bold text-white-900">Get in Touch</h1>
           <img
             src={decorFooter}
             alt="decorFooter"
-            className="mb-3 h-3 w-8 mt-3"
+            className="mb-3 h-3 w-8 md:mt-3"
           />
-          <ul className="text-lg text-gray-400 flex flex-col">
+          <ul className="text-sm md:text-lg text-gray-400 flex flex-col">
             <div className="flex flex-row items-center border-b border-gray-700 pt-3 pb-3">
               <img
                 src={contactSupport}

@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <nav className="bg-blue-50 p-4 sticky top-0 z-10 shadow-md flex justify-between">
-      <div className="flex items-center gap-10 ml-10">
+      <div className="flex items-center justify-start md:gap-10 md:ml-10">
         <img src={Logo} alt="Logo" className="w-12" />
-        <h1 className="text-2xl font-bold">
+        <h1 className="text-lg md:text-2xl font-bold">
           Nimbus<span className="text-blue-500">360</span>Solutions
         </h1>
       </div>
@@ -15,7 +15,7 @@ const Navbar = () => {
         <li>
           <Link
             to="/login"
-            className="bg-blue-500 text-white px-5 py-2 mr-5 hover:bg-blue-600"
+            className="bg-blue-500 text-white px-5 py-2 md:mr-5 hover:bg-blue-600"
           >
             Login
           </Link>
