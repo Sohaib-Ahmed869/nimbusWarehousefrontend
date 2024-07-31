@@ -123,7 +123,7 @@ const CashierLogin = () => {
           transform: "translate(-50%, -50%)",
         }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header  >
           <Modal.Title className="text-2xl font-bold">
             Forgot Password?
           </Modal.Title>

@@ -62,16 +62,16 @@ const AddProductRate = () => {
   }, [selectedClient]);
 
   return (
-    <div className="flex flex-col w-full min-h-screen">
-      <div className="flex w-full justify-between p-5">
-        <div className="flex items-center justify-between p-5 w-full">
-          <p className="text-2xl font-bold">Product Rates</p>
+    <div className="flex flex-col p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard md:no-scrollbar">
+      <div className="flex w-full justify-between">
+        <div className="flex justify-between w-full">
+          <p className="text-3xl font-semibold">Product Rates</p>
           <p className="text-sm text-gray-500 ml-5">
             To add or update a product rate, contact the administrator
           </p>
         </div>
       </div>
-      <div className="flex flex-col w-full p-20">
+      <div className="flex flex-col justify-center p-10 mt-5 border shadow-md rounded-xl">
         <p className="text-sm text-gray-500">Client</p>
         <select
           className="w-full border-2 border-gray-300 rounded-full p-3 mt-2"

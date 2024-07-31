@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
+import { BiPlus } from "react-icons/bi";
 
 const URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -18,6 +19,7 @@ const Outbound = () => {
   const [selectedProductQuantity, setSelectedProductQuantity] = useState(0);
 
   const [reason, setReason] = useState("");
+  const [mobileView, setMobileView] = useState(false);
 
   const [showAddProductToOutbound, setShowAddProductToOutbound] =
     useState(false);
@@ -37,6 +39,14 @@ const Outbound = () => {
     console.log("Client: ", e.target.value);
     setSelectedClient(e.target.value);
   };
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setMobileView(true);
+    } else {
+      setMobileView(false);
+    }
+  }, [window.innerWidth]);
 
   useEffect(() => {
     if (selectedClient == "null" || selectedClient == null) {
@@ -141,7 +151,7 @@ const Outbound = () => {
     // alert confirmation
     if (
       !window.confirm(
-        `Are you sure you want to submit the outbound for ${clientName}?`
+        `Are you sure you want to submit the outbound?`
       )
     ) {
       return;
@@ -304,19 +314,21 @@ const Outbound = () => {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen p-5">
-      <div className="flex flex-col justify-center p-5 border shadow-md rounded-xl">
-        <div className="flex items-center justify-between p-5 w-full">
-          <p className="text-2xl font-bold">Outbound</p>
-          <button
-            className=" text-blue-500 p-3 ml-5 flex items-center justify-center hover:text-blue-700"
-            style={{ border: "none" }}
-            onClick={() => setShowAddProductToOutbound(true)}
-          >
-            Add Product
-          </button>
-        </div>
-
+    <div className="flex flex-col p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard md:no-scrollbar">
+      {/* {showAddProductToOutbound && <div></div>} */}
+      <div className="flex items-center justify-between">
+        {/* <FiCornerRightDown className="w-6 rounded-full border-gray-300 mt-1 h-6 text-blue-500 me-2" /> */}
+        <p className="text-3xl font-semibold">Outbound Product</p>
+        {/* <button
+          className=" text-blue-500 mx-5 flex items-center justify-center hover:text-blue-700"
+          style={{ border: "none" }}
+          onClick={() => setShowAddProductToOutbound(true)}
+        >
+          <BiPlus className="w-5 h-5" />
+          Add Product
+        </button> */}
+      </div>
+      <div className="flex flex-col justify-center p-5 mt-5 border shadow-md rounded-xl">
         <div className="flex items-center justify-between p-5 w-full">
           <p className="text-2xl font-bold">Client</p>
           <select
@@ -475,19 +487,24 @@ const Outbound = () => {
           </button>
         </div>
       </div>
-
+      {showAddProductToOutbound && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+      )}
       <Modal
         show={showAddProductToOutbound}
         onHide={() => setShowAddProductToOutbound(false)}
         centered
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl shadow-xl z-50 bg-white modal"
+        style={{ width: mobileView ? "90%" : "33%" }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header className="p-5">
           <Modal.Title>
-            <p className="text-2xl font-bold">Add Product</p>
+            <p className="text-2xl text-center md:text-left font-bold">
+              Add Product
+            </p>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="p-5 pt-0">
           <div className="w-full flex flex-col items-center justify-center mt-5">
             <select
               className="border p-2 rounded-md"

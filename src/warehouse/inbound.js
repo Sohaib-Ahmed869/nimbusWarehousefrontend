@@ -46,12 +46,12 @@ const Inbound = () => {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen">
-      <div className="flex items-center justify-center p-5">
-        <FiCornerRightDown className="w-6 rounded-full border-gray-300 mt-1 h-6 text-blue-500 me-2" />
-        <p className="text-2xl font-bold">Add Inbound</p>
+    <div className="flex flex-col p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard md:no-scrollbar">
+      <div className="flex items-center justify-start">
+        {/* <FiCornerRightDown className="w-6 rounded-full border-gray-300 mt-1 h-6 text-blue-500 me-2" /> */}
+        <p className="text-3xl font-semibold">Inbound Product</p>
       </div>
-      <div className="flex flex-col w-full p-20">
+      <div className="flex flex-col w-full rounded-xl shadow-md border p-10 mt-5">
         <p className="text-sm text-gray-500">Product</p>
         <select
           className="w-full border-2 border-gray-300 rounded-full p-3 mt-2"

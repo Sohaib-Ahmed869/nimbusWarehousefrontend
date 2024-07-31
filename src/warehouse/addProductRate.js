@@ -16,6 +16,7 @@ const AddProductRate = () => {
   const [showAddClientModal, setShowAddClientModal] = useState(false);
   const [updateClientProductRate, setUpdateClientProductRate] = useState(false);
   const [updatedProductRate, setUpdatedProductRate] = useState(0);
+  const [mobileView, setMobileView] = useState(false);
 
   useEffect(() => {
     axios
@@ -26,6 +27,14 @@ const AddProductRate = () => {
         setClients(response.data);
       });
   }, []);
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setMobileView(true);
+    } else {
+      setMobileView(false);
+    }
+  }, [window.innerWidth]);
 
   useEffect(() => {
     axios
@@ -118,27 +127,24 @@ const AddProductRate = () => {
   }, [selectedClient]);
 
   return (
-    <div className="flex flex-col w-full min-h-screen">
-      <div className="flex w-full justify-between p-5">
-        <div className="flex items-center justify-center p-5">
-          <BiPlus className="w-6 border rounded-full border-gray-300 mt-1 h-6 text-blue-500 me-2" />
-          <p className="text-2xl font-bold">Add Product Rate</p>
-        </div>
+    <div className="flex flex-col p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard md:no-scrollbar">
+      <div className="flex w-full justify-between">
+        <p className="text-3xl font-semibold">Add Product Rate</p>
         <button
-          className="bg-blue-500 text-white p-3 rounded-md mt-2"
+          className="text-blue-500 mx-5 flex items-center justify-center hover:text-blue-700"
           onClick={() => {
             if (!selectedClient) {
               alert("Please select a client to add product rate");
               return;
             }
-
             setShowAddClientModal(true);
           }}
         >
+          <BiPlus className="w-5 h-5" />
           Add Product Rate
         </button>
       </div>
-      <div className="flex flex-col w-full p-20">
+      <div className="flex flex-col justify-center p-10 mt-5 border shadow-md rounded-xl">
         <p className="text-sm text-gray-500">Client</p>
         <select
           className="w-full border-2 border-gray-300 rounded-full p-3 mt-2"
@@ -208,14 +214,15 @@ const AddProductRate = () => {
         show={updateClientProductRate}
         onHide={() => setUpdateClientProductRate(false)}
         centered
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white"
+        style={{ width: mobileView ? "90%" : "33%" }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header className="p-5">
           <Modal.Title>
-            <p className="text-2xl font-bold">Update Product Rate</p>
+            <p className="text-2xl text-center md:text-left font-bold">Update Product Rate</p>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="p-5 pt-0">
           <p className="text-sm text-gray-500 mt-5">Rate</p>
           <input
             type="number"
@@ -249,14 +256,15 @@ const AddProductRate = () => {
         show={showAddClientModal}
         onHide={() => setShowAddClientModal(false)}
         centered
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white"
+        style={{ width: mobileView ? "90%" : "33%" }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header className="p-5">
           <Modal.Title>
-            <p className="text-2xl font-bold">Add Product Rate</p>
+            <p className="text-2xl text-center md:text-left font-bold">Add Product Rate</p>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="p-5 pt-0">
           <p className="text-sm text-gray-500 mt-5">Product</p>
           <select
             className="w-full border-2 border-gray-300 rounded-full p-3 mt-2"

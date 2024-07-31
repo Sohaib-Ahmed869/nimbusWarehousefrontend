@@ -73,7 +73,7 @@ const Home = () => {
           transform: "translate(-50%, -50%)",
         }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header >
           <Modal.Title>
             <p className="text-xl md:text-2xl font-bold p-2">Contact Us</p>
           </Modal.Title>

@@ -1,5 +1,5 @@
 import useStore from "../Store/store";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState, userRef } from "react";
 import Logo from "../Assets/Logo.png";
 import dashboard from "../Assets/dashboard.png";
 import { FiBarChart } from "react-icons/fi";
@@ -14,6 +14,7 @@ import { FiLogOut } from "react-icons/fi";
 import { MdOutlineRecordVoiceOver } from "react-icons/md";
 import { FiDelete } from "react-icons/fi";
 import { BiCartAdd } from "react-icons/bi";
+import { BsList } from "react-icons/bs";
 
 import { Modal } from "react-bootstrap";
 import "./dashboardLayout.css";
@@ -27,7 +28,13 @@ import Inbound from "../warehouse/inbound";
 
 const CashierDashboardLayout = () => {
   const [activeOption, setActiveOption] = useState("Dashboard");
+  const [mobileView, setMobileView] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [showSignInModal, setShowSignInModal] = useState(false);
   const { userRole, setUserRole } = useStore();
+  const menuRef = useRef();
 
   const onLogout = () => {
     setUserRole(null);
@@ -47,19 +54,160 @@ const CashierDashboardLayout = () => {
     }
   }, [userRole]);
 
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const [showSignInModal, setShowSignInModal] = useState(false);
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setMobileView(true);
+      setSidebarVisible(false);
+    } else {
+      setMobileView(false);
+    }
+  }, [window.innerWidth]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowMobileMenu(false);
+      }
+    }
+
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => document.removeEventListener("touchstart", handleClickOutside);
+  }, [menuRef]);
 
   return (
     <div className="flex flex-row w-full">
+      <div className="flex text-right">
+        <BsList
+          className="absolute w-10 h-10 cursor-pointer"
+          onClick={() => {
+            if (!mobileView) {
+              setSidebarVisible(!sidebarVisible);
+              setShowMobileMenu(false);
+            }
+            if (mobileView) {
+              setSidebarVisible(false);
+              setShowMobileMenu(!showMobileMenu);
+            }
+          }}
+        />
+      </div>
+      {showMobileMenu && (
+        <div
+          className="absolute top-5 left-5 mobile-menu z-30 bg-white shadow-lg"
+          ref={menuRef}
+        >
+          <div className="flex flex-col items-end justify-end">
+            <div
+              className="flex flex-col items-end justify-center font text-md"
+              style={{ color: "#2e408b" }}
+            >
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                  activeOption === "Dashboard" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => {
+                  setActiveOption("Dashboard");
+                  setShowMobileMenu(false);
+                }}
+              >
+                <FiBarChart className="w-4 mr-2" />
+                <p>Dashboard</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                  activeOption === "Inbound" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => {
+                  setActiveOption("Inbound");
+                  setShowMobileMenu(false);
+                }}
+              >
+                <FiCornerRightDown className="w-4 mr-2" />
+                <p className="">Inbound</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                  activeOption === "Outbound" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => {
+                  setActiveOption("Outbound");
+                  setShowMobileMenu(false);
+                }}
+              >
+                <FiCornerRightUp className="w-4 mr-2" />
+                <p className="">Outbound</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                  activeOption === "OutboundNoClient" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => {
+                  setActiveOption("OutboundNoClient");
+                  setShowMobileMenu(false);
+                }}
+              >
+                <MdOutlineRecordVoiceOver className="w-4 mr-2" />
+                <p className="">Outbound No Client</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                  activeOption === "Clients" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => {
+                  setActiveOption("Clients");
+                  setShowMobileMenu(false);
+                }}
+              >
+                <FiUsers className="w-4 mr-2" />
+                <p className="">Clients</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                  activeOption === "Schedule" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => {
+                  setActiveOption("Schedule");
+                  setShowMobileMenu(false);
+                }}
+              >
+                <FaCcMastercard className="w-4 mr-2" />
+                <p className="">Rate List</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold pl-4 ${
+                  activeOption === "Add Product" ? "bg-gray-300" : ""
+                }`}
+                onClick={() => {
+                  setActiveOption("Add Product");
+                  setShowMobileMenu(false);
+                }}
+              >
+                <BiCartAdd className="w-4 mr-2" />
+                <p className="">Products</p>
+              </div>
+              <div
+                className={`flex items-center gap-2 w-full hover:bg-gray-300 p-4 cursor-pointer hover:font-semibold`}
+                onClick={() => setShowLogoutModal(true)}
+              >
+                <FiLogOut className="w-4 mr-2" />
+                <p className="">Logout</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {showLogoutModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-30"></div>
       )}
       {showSignInModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-30"></div>
       )}
       {userRole != null && userRole != "null" && userRole == "cashier" && (
-        <div className="w-1/6 bg-white border-r border-black">
+        <div
+          className={` bg-white border-r w-1/6 border-black sidebar ${
+            !sidebarVisible ? "hidden" : "" || mobileView ? "hidden" : ""
+          } h-screen max-h-screen overflow-y-auto no-scrollbar`}
+        >
           <div className="w-full flex items-center justify-center">
             <img src={Logo} alt="logo" className="w-20 m-5" />
           </div>
@@ -141,14 +289,18 @@ const CashierDashboardLayout = () => {
           </div>
         </div>
       )}
-      <div className="w-5/6 bg-white">
+      <div
+        className={`bg-white 
+          ${mobileView ? "w-full" : !sidebarVisible ? "w-full" : "w-5/6"}`}
+      >
         <Modal
           show={showLogoutModal}
           onHide={() => setShowLogoutModal(false)}
           centered
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10"
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-5 modal modalbody"
+          style={{ width: mobileView ? "90%" : "33%" }}
         >
-          <Modal.Header closeButton>
+          <Modal.Header >
             <Modal.Title>
               <p className="text-2xl font-bold">Logout</p>
             </Modal.Title>
@@ -178,9 +330,10 @@ const CashierDashboardLayout = () => {
           show={showSignInModal}
           onHide={() => setShowSignInModal(false)}
           centered
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10"
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-40 bg-white p-5 modal modalbody"
+          style={{ width: mobileView ? "90%" : "33%" }}
         >
-          <Modal.Header closeButton>
+          <Modal.Header >
             <Modal.Title></Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -203,7 +356,7 @@ const CashierDashboardLayout = () => {
             Dashboard: <Dashboard />,
             Inbound: <Inbound />,
             Outbound: <Outbound />,
-            OutBoundNoClient: <OutboundNoClient />,
+            OutboundNoClient: <OutboundNoClient />,
             Clients: <Clients />,
             Schedule: <AddProductRate />,
             "Add Product": <AddProduct />,

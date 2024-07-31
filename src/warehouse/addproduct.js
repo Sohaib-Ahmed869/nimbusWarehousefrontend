@@ -11,6 +11,7 @@ const AddProduct = () => {
   const [stock, setStock] = useState(0);
   const [products, setProducts] = useState([]);
   const [showAddProductModal, setShowAddProductModal] = useState(false);
+  const [mobileView, setMobileView] = useState(false);
 
   const addProduct = async () => {
     if (!name || !unit || !stock) {
@@ -42,8 +43,6 @@ const AddProduct = () => {
 
   const getProducts = async () => {
     try {
-
-
       const response = await axios.get(`${URL}/products`, {
         withCredentials: true,
       });
@@ -58,20 +57,29 @@ const AddProduct = () => {
     getProducts();
   }, [products]);
 
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setMobileView(true);
+    } else {
+      setMobileView(false);
+    }
+  }, [window.innerWidth]);
+
   return (
-    <div className="flex flex-col w-full min-h-screen p-5">
-      <div className="flex flex-col justify-center p-5 border shadow-md rounded-xl">
-        <div className="flex items-center justify-between p-5 w-full">
-          <p className="text-2xl font-bold">Products</p>
-          <button
-            className="text-blue-500 p-3 ml-5 flex items-center justify-center hover:text-blue-700"
-            style={{ border: "none" }}
-            onClick={() => setShowAddProductModal(true)}
-          >
-            <BiPlus className="w-6 border rounded-full border-gray-300 h-6 text-blue-500 me-2" />
-            <p>Add Product</p>
-          </button>
-        </div>
+    <div className="flex flex-col p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard md:no-scrollbar">
+      <div className="flex items-center justify-between">
+        {/* <FiCornerRightDown className="w-6 rounded-full border-gray-300 mt-1 h-6 text-blue-500 me-2" /> */}
+        <p className="text-3xl font-semibold">Products</p>
+        <button
+          className="text-blue-500 ml-5 flex items-center justify-center hover:text-blue-700"
+          style={{ border: "none" }}
+          onClick={() => setShowAddProductModal(true)}
+        >
+          <BiPlus className="w-5 h-5" />
+          <p>Add Product</p>
+        </button>
+      </div>
+      <div className="flex flex-col justify-center p-5 mt-5 border shadow-md rounded-xl">
         <div className="table w-full p-5">
           <table className="w-full">
             <thead>
@@ -106,14 +114,15 @@ const AddProduct = () => {
         show={showAddProductModal}
         onHide={() => setShowAddProductModal(false)}
         centered
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 w-1/2 rounded-2xl shadow-xl z-50 bg-white p-5 modal"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 w-1/2 rounded-2xl shadow-xl z-50 p-5 bg-white modal"
+        style={{ width: mobileView ? "90%" : "33%" }}
       >
-        <Modal.Header closeButton></Modal.Header>
+        <Modal.Header></Modal.Header>
         <Modal.Body className="modalbody flex flex-col">
           <div className="flex flex-col">
             <div className="flex items-center justify-center">
-              <BiPlus className="w-6 border rounded-full border-gray-300 mt-1 h-6 text-blue-500 me-2" />
-              <p className="text-2xl font-bold">Add Product</p>
+              {/* <BiPlus className="w-6 border rounded-full border-gray-300 mt-1 h-6 text-blue-500 me-2" /> */}
+              <p className="text-2xl text-center md:text-left font-bold">Add Product</p>
             </div>
             <div>
               <div className="flex items-center justify-between mt-5">

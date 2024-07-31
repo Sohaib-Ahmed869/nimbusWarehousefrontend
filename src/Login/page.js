@@ -139,12 +139,12 @@ const Login = () => {
 
   return (
     <div
-      className={`login flex items-center justify-center min-h-screen w-full pb-5`}
+      className={`login flex items-center justify-center min-h-screen w-full p-5`}
     >
       {(showForgetPasswordModal || showOTPModal || showPasswordModal) && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
       )}
-      <div className="login_container flex flex-col justify-center items-center w-1/3">
+      <div className="login_container flex flex-col justify-center items-center w-full md:w-1/3">
         <img src={Logo} alt="logo" className="h-36" />
         <p className="text-3xl font-bold mt-0">Welcome Back</p>
         <p className="text-sm text-gray-500 mt-2">Login to your account</p>
@@ -212,7 +212,7 @@ const Login = () => {
         show={showForgetPasswordModal}
         onHide={() => setShowForgetPasswordModal(false)}
         centered
-        className="bg-white p-10 rounded-2xl w-1/3 shadow-xl z-50"
+        className="bg-white p-30 md:p-10 rounded-2xl md:w-1/3 shadow-xl z-50"
         style={{
           position: "absolute",
           top: "50%",
@@ -220,7 +220,7 @@ const Login = () => {
           transform: "translate(-50%, -50%)",
         }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header  >
           <Modal.Title className="text-2xl font-bold">
             Forgot Password?
           </Modal.Title>
@@ -230,7 +230,7 @@ const Login = () => {
         </Modal.Header>
         <Modal.Body>
           <p className="text-sm text-gray-800">Email</p>
-          <div className="w-full flex  items-center border border-gray-300 rounded-md p-2 mt-2">
+          <div className="w-full flex items-center border border-gray-300 rounded-md p-2 mt-2">
             <input
               type="email"
               className="w-full"
@@ -268,7 +268,7 @@ const Login = () => {
           transform: "translate(-50%, -50%)",
         }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header  >
           <Modal.Title className="text-2xl font-bold">Enter OTP</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -327,7 +327,7 @@ const Login = () => {
           transform: "translate(-50%, -50%)",
         }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header  >
           <Modal.Title className="text-2xl font-bold">
             Update Password
           </Modal.Title>

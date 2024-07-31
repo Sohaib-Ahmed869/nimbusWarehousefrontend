@@ -11,13 +11,13 @@ const Profile = () => {
   const [password, setPassword] = useState("");
   const [branchName, setBranchName] = useState();
   const [warehouseId, setWarehouseId] = useState();
+  const [mobileView, setMobileView] = useState(false);
 
   const [showUsernameModal, setShowUsernameModal] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showBranchNameModal, setShowBranchNameModal] = useState(false);
 
   const getWarehouse = async () => {
-
     try {
       const response = await axios.get(`${URL}/warehouses/get-warehouse`, {
         withCredentials: true,
@@ -28,6 +28,14 @@ const Profile = () => {
       alert("Error: " + error.response.data.message);
     }
   };
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setMobileView(true);
+    } else {
+      setMobileView(false);
+    }
+  }, [window.innerWidth]);
 
   useEffect(() => {
     getWarehouse();
@@ -104,53 +112,53 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen p-5 dashboard2">
+    <div className="flex flex-col p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard md:no-scrollbar">
       {(showBranchNameModal || showPasswordModal || showUsernameModal) && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
       )}
-      <div className="flex flex-col justify-center p-5 border shadow-md rounded-xl">
-        <div className="flex items-center justify-center p-5 w-full">
-          <BiUser size={30} className="text-blue-500 mr-3" />
-          <p className="text-2xl font-bold">Profile</p>
-        </div>
-        <div className="flex flex-col p-5">
-          <div className="flex items-center justify-between p-5 w-full hover:border hover:shadow-md rounded-lg">
-            <p className="text-md font-normal">
-              Username:{" "}
+      <div className="flex items-center justify-start w-full">
+        <BiUser size={30} className="text-blue-500 mr-3" />
+        <p className="text-3xl font-semibold">Profile</p>
+      </div>
+      <div className="flex flex-col justify-center p-5 mt-5 border shadow-md rounded-xl">
+        <div className="flex flex-col gap-5">
+          <div className="flex items-center justify-between p-0 md:p-5 w-full md:hover:border md:hover:shadow-md rounded-lg">
+            <div className="flex flex-col md:flex-row">
+              <p className="text-lg font-semibold">Username: </p>
               <span className="text-md ml-2 underline font-normal">
                 {warehouse?.username}
               </span>
-            </p>
+            </div>
             <button
-              className="text-blue-500 p-3 ml-5 flex items-center justify-center hover:text-blue-700"
+              className="text-blue-500 flex items-center justify-center hover:text-blue-700"
               style={{ border: "none" }}
               onClick={() => setShowUsernameModal(true)}
             >
               Update
             </button>
           </div>
-          <div className="flex items-center justify-between p-5 w-full hover:border hover:shadow-md rounded-lg">
-            <p className="text-md font-normal">
-              Password:{" "}
+          <div className="flex items-center justify-between p-0 md:p-5 w-full md:hover:border md:hover:shadow-md rounded-lg">
+            <div className="flex flex-col md:flex-row">
+              <p className="text-lg font-semibold">Password: </p>
               <span className="text-md ml-2 font-normal">********</span>
-            </p>
+            </div>
             <button
-              className="text-blue-500 p-3 ml-5 flex items-center justify-center hover:text-blue-700"
+              className="text-blue-500 flex items-center justify-center hover:text-blue-700"
               style={{ border: "none" }}
               onClick={() => setShowPasswordModal(true)}
             >
               Update
             </button>
           </div>
-          <div className="flex items-center justify-between p-5 w-full hover:border hover:shadow-md rounded-lg">
-            <p className="text-md font-normal">
-              Branch Name:{" "}
+          <div className="flex items-center justify-between p-0 md:p-5 w-full md:hover:border md:hover:shadow-md rounded-lg">
+            <div className="flex flex-col md:flex-row">
+              <p className="text-lg font-semibold">Branch Name: </p>
               <span className="text-md ml-2 font-normal">
                 {warehouse?.branchname}
               </span>
-            </p>
+            </div>
             <button
-              className="text-blue-500 p-3 ml-5 flex items-center justify-center hover:text-blue-700"
+              className="text-blue-500 flex items-center justify-center hover:text-blue-700"
               style={{ border: "none" }}
               onClick={() => setShowBranchNameModal(true)}
             >
@@ -164,8 +172,9 @@ const Profile = () => {
         onHide={() => setShowUsernameModal(false)}
         centered
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10 modal modalbody"
+        style={{ width: mobileView ? "90%" : "33%" }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header  >
           <Modal.Title>Update Username</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -197,8 +206,9 @@ const Profile = () => {
         onHide={() => setShowPasswordModal(false)}
         centered
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10 modal modalbody"
+        style={{ width: mobileView ? "90%" : "33%" }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header  >
           <Modal.Title>Update Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -230,8 +240,9 @@ const Profile = () => {
         onHide={() => setShowBranchNameModal(false)}
         centered
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10 modal modalbody"
+        style={{ width: mobileView ? "90%" : "33%" }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header  >
           <Modal.Title>Update Branch Name</Modal.Title>
         </Modal.Header>
         <Modal.Body>

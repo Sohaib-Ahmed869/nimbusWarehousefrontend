@@ -27,18 +27,17 @@ const Clients = () => {
   }, []);
 
   return (
-    <div className="flex flex-col w-full min-h-screen p-5">
-      <div className="flex flex-col justify-center p-5 border shadow-md rounded-xl">
-        <div className="flex items-center justify-between p-5 w-full">
-          <p className="text-2xl font-bold">Clients</p>
-          <button
-            className=" text-blue-500 p-3 ml-5 flex items-center justify-center hover:text-blue-700"
-            style={{ border: "none" }}
-          >
-            For a new client, Contact the admininstrator
-          </button>
-        </div>
-
+    <div className="flex flex-col p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard md:no-scrollbar">
+      <div className="flex items-center justify-between">
+        <p className="text-3xl font-semibold">Clients</p>
+        <button
+          className=" text-blue-500 ml-5 flex items-center justify-center hover:text-blue-700"
+          style={{ border: "none" }}
+        >
+          For a new client, Contact the admininstrator
+        </button>
+      </div>
+      <div className="flex flex-col justify-center p-5 mt-5 border shadow-md rounded-xl">
         <div className="table w-full p-5">
           <div className="table-row-group">
             <div

@@ -69,69 +69,65 @@ const CashierDelete = () => {
   };
 
   return (
-    <div className="flex  justify-center min-h-screen w-full p-10">
-      <div className="login_container flex flex-col items-center w-full">
-        <div className="flex items-center justify-between p-5 w-full">
-          <p className="text-2xl font-bold">View and manage cashier accounts</p>
-          <button
-            className="text-blue-500 p-3 ml-5 flex items-center justify-center hover:text-blue-700"
-            style={{ border: "none" }}
-            onClick={() => setShowAddCashierModal(true)}
-          >
-            <BiPlus className="w-6 border rounded-full border-gray-300 h-6 text-blue-500 me-2" />
-            Add Cashier
-          </button>
-        </div>
-        <div className="flex flex-col w-full mt-5">
-          <p className="text-sm text-gray-500 mt-5 mb-5">Cashiers</p>
-          <div className="w-full table">
-            <table className="w-full">
-              <thead>
+    <div className="flex flex-col p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard md:no-scrollbar">
+      <div className="flex items-center justify-between">
+        {/* <FiCornerRightDown className="w-6 rounded-full border-gray-300 mt-1 h-6 text-blue-500 me-2" /> */}
+        <p className="text-3xl font-semibold">Cashier Management</p>
+        <button
+          className="text-blue-500 mx-5 flex items-center justify-center hover:text-blue-700"
+          style={{ border: "none" }}
+          onClick={() => setShowAddCashierModal(true)}
+        >
+          <BiPlus className="w-5 h-5" />
+          Add Cashier
+        </button>
+      </div>
+      <div className="login_container flex flex-col items-center w-full p-5 mt-5 border shadow-md rounded-xl">
+        <div className="w-full table p-5">
+          <table className="w-full">
+            <thead>
+              <tr
+                className="table-row text-white text-left"
+                style={{ backgroundColor: "#198e7d" }}
+              >
+                <th className="border p-2">Username</th>
+                <th className="border p-2">Password</th>
+                <th className="border p-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cashiers.map((cashier) => (
                 <tr
-                  className="table-row text-white text-left"
-                  style={{ backgroundColor: "#198e7d" }}
+                  key={cashier._id}
+                  className="table-row hover:cursor-pointer hover:bg-gray-100"
                 >
-                  <th className="border p-2">Username</th>
-                  <th className="border p-2">Password</th>
-                  <th className="border p-2">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {cashiers.map((cashier) => (
-                  <tr
-                    key={cashier._id}
-                    className="table-row hover:cursor-pointer hover:bg-gray-100"
-                  >
-                    <td className="border p-2 border-r-0">
-                      {cashier.username}
-                    </td>
-                    <td className="border-l-0 border-r-0 p-2">************</td>
-                    <td className="border p-2 border-l-0 text-center">
-                      <button
-                        className="bg-blue-500 me-2 text-white p-2 rounded-md mt-2 hover:bg-blue-700"
-                        onClick={() => {
-                          setCashierId(cashier._id);
-                          setUpdatePasswordModal(true);
-                        }}
-                      >
-                        <FiEdit3 className="w-4" />
-                      </button>
+                  <td className="border p-2 border-r-0">{cashier.username}</td>
+                  <td className="border-l-0 border-r-0 p-2">************</td>
+                  <td className="border p-2 border-l-0 text-center">
+                    <button
+                      className="bg-blue-500 me-2 text-white p-2 rounded-md mt-2 hover:bg-blue-700"
+                      onClick={() => {
+                        setCashierId(cashier._id);
+                        setUpdatePasswordModal(true);
+                      }}
+                    >
+                      <FiEdit3 className="w-4" />
+                    </button>
 
-                      <button
-                        className="bg-red-500 text-white p-2 rounded-md mt-2 hover:bg-red-700"
-                        onClick={() => {
-                          setCashierId(cashier._id);
-                          setCashierDeleteModal(true);
-                        }}
-                      >
-                        <FiTrash className="w-4" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                    <button
+                      className="bg-red-500 text-white p-2 rounded-md mt-2 hover:bg-red-700"
+                      onClick={() => {
+                        setCashierId(cashier._id);
+                        setCashierDeleteModal(true);
+                      }}
+                    >
+                      <FiTrash className="w-4" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
       <Modal
@@ -140,7 +136,7 @@ const CashierDelete = () => {
         centered
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10 modalbody"
       >
-        <Modal.Header closeButton>
+        <Modal.Header  >
           <Modal.Title>
             <p className="text-2xl font-bold">Delete Cashier Account</p>
           </Modal.Title>
@@ -171,7 +167,7 @@ const CashierDelete = () => {
         centered
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl w-1/3 shadow-xl z-50 bg-white p-10 modalbody"
       >
-        <Modal.Header closeButton>
+        <Modal.Header  >
           <Modal.Title>
             <p className="text-2xl font-bold">Update Password</p>
           </Modal.Title>
@@ -208,7 +204,7 @@ const CashierDelete = () => {
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl items-center justify-center flex flex-col shadow-xl z-50 bg-white p-10"
         style={{ height: "100%", overflowY: "scroll" }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header  >
           <Modal.Title>
             <button
               onClick={() => {

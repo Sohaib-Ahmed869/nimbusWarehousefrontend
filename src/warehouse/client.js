@@ -10,6 +10,7 @@ const Clients = () => {
   const [phone, setPhone] = useState("");
 
   const [clients, setClients] = useState([]);
+  const [mobileView, setMobileView] = useState(false);
 
   const [showAddClientModal, setShowAddClientModal] = useState(false);
 
@@ -54,27 +55,34 @@ const Clients = () => {
   };
 
   useEffect(() => {
+    if (window.innerWidth < 768) {
+      setMobileView(true);
+    } else {
+      setMobileView(false);
+    }
+  }, [window.innerWidth]);
+
+  useEffect(() => {
     getClients();
   }, [clients]);
 
   return (
-    <div className="flex flex-col w-full min-h-screen p-5">
+    <div className="flex flex-col p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard md:no-scrollbar">
       {showAddClientModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
       )}
-      <div className="flex flex-col justify-center p-5 border shadow-md rounded-xl">
-        <div className="flex items-center justify-between p-5 w-full">
-          <p className="text-2xl font-bold">Clients</p>
-          <button
-            className=" text-blue-500 p-3 ml-5 flex items-center justify-center hover:text-blue-700"
-            style={{ border: "none" }}
-            onClick={() => setShowAddClientModal(true)}
-          >
-            <BiPlus className="w-6 h-6 mt-1" />
-            Add Client
-          </button>
-        </div>
-
+      <div className="flex items-center justify-between">
+        <p className="text-3xl font-semibold">Clients</p>
+        <button
+          className=" text-blue-500 mx-5 flex items-center justify-center hover:text-blue-700"
+          style={{ border: "none" }}
+          onClick={() => setShowAddClientModal(true)}
+        >
+          <BiPlus className="w-5 h-5" />
+          Add Client
+        </button>
+      </div>
+      <div className="flex flex-col justify-center p-5 mt-5 border shadow-md rounded-xl">
         <div className="table w-full p-5">
           <div className="table-row-group">
             <div
@@ -110,16 +118,17 @@ const Clients = () => {
         onHide={() => setShowAddClientModal(false)}
         centered
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-gray-300 rounded-2xl shadow-xl z-50 bg-white modal"
+        style={{ width: mobileView ? "90%" : "33%" }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>
-            <p className="text-2xl font-bold p-2">Add Client</p>
+            <p className="text-2xl font-bold text-center md:text-left p-5">Add Client</p>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="flex flex-col w-full p-5 modalbody">
-            <div className="flex items-center gap-2">
-              <div>
+            <div className="flex md:flex-row flex-col items-center gap-2 w-full">
+              <div className="w-full">
                 <p className="text-sm text-gray-500">Client Name</p>
                 <div className="w-full flex items-center border-2 border-gray-300 rounded-full p-3 mt-2">
                   <input
@@ -131,7 +140,7 @@ const Clients = () => {
                   />
                 </div>
               </div>
-              <div>
+              <div className="w-full">
                 <p className="text-sm text-gray-500">Address</p>
                 <div className="w-full flex items-center border-2 border-gray-300 rounded-full p-3 mt-2">
                   <input
@@ -144,7 +153,7 @@ const Clients = () => {
                 </div>
               </div>
             </div>
-            <p className="text-sm text-gray-500 mt-5">Phone</p>
+            <p className="text-sm text-gray-500 mt-2 md:mt-5">Phone</p>
             <div className="w-full flex items-center border-2 border-gray-300 rounded-full p-3 mt-2">
               <input
                 type="text"

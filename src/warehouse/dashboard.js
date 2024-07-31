@@ -21,7 +21,6 @@ import { Line } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import { easingEffects } from "chart.js/helpers";
 import "./dashboard.css";
-import moment from 'moment-timezone';
 const URL = process.env.REACT_APP_BACKEND_URL;
 
 ChartJS.register(
@@ -250,7 +249,7 @@ const Dashboard = () => {
   }, [outboundLogs, products]);
 
   return (
-    <div className="p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard no-scrollbar">
+    <div className="p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard md:no-scrollbar">
       <h1 className="text-3xl font-semibold">Dashboard</h1>
       <p className="text-gray-500">
         Below is the summary of your team activity
@@ -262,7 +261,7 @@ const Dashboard = () => {
         >
           <div
             className="absolute w-20 h-20 rounded-full bg-white text-white opacity-20"
-            style={{ bottom: "-30%", right: "-10%" }}
+            style={{ bottom: "-30%", right: "-5%" }}
           ></div>
 
           <div>
@@ -281,7 +280,7 @@ const Dashboard = () => {
         >
           <div
             className="absolute w-20 h-20 rounded-full bg-white text-white opacity-20"
-            style={{ bottom: "-30%", right: "-10%" }}
+            style={{ bottom: "-30%", right: "-5%" }}
           ></div>
 
           <div>
@@ -299,7 +298,7 @@ const Dashboard = () => {
         >
           <div
             className="absolute w-20 h-20 rounded-full bg-white text-white opacity-20"
-            style={{ bottom: "-30%", right: "-10%" }}
+            style={{ bottom: "-30%", right: "-5%" }}
           ></div>
 
           <div>
@@ -311,11 +310,11 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-row gap-5 mt-10 cards">
-        <div className="mt-10 h-96 flex flex-col items-center rounded-xl p-5 shadow-xl w-1/2 cardgraph">
+      <div className="flex flex-row md:gap-5 md:mt-10 cards">
+        <div className="mt-10 h-96 flex flex-col items-center border rounded-xl p-5 shadow-xl w-1/2 cardgraph">
           <Line data={salesData} options={chartOptions} />
         </div>
-        <div className="mt-10 h-96 flex flex-col items-center rounded-xl p-5 shadow-xl w-1/2 cardgraph">
+        <div className="mt-10 h-96 flex flex-col items-center border rounded-xl p-5 shadow-xl w-1/2 cardgraph">
           <Bar data={salesDataByProduct} options={chartOptions} />
         </div>
       </div>
@@ -355,7 +354,7 @@ const Dashboard = () => {
           ))}
         </table>
       </div> */}
-      <div className="flex flex-row gap-5 mt-10 pb-10 cards">
+      <div className="flex flex-row mt-10 pb-10 cards gap-10 md:gap-5">
         <div className="w-1/2 border border-gray-400 rounded-xl p-2 h-96 overflow-y-auto card no-scrollbar">
           <h1 className="text-xl font-semibold mt-2 text-center">
             Inbound Logs

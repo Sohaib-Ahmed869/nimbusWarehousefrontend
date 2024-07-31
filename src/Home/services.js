@@ -13,7 +13,7 @@ const points = [
 
 const HowItWorks = () => {
   return (
-    <div className="flex flex-col w-full p-0 md:flex-row justify-center items-center md:p-36 md:pt-10 md:pb-20">
+    <div className="flex flex-col w-full pt-10 pb-10 md:flex-row justify-center items-center md:p-36 md:pt-10 md:pb-20">
       <div className="w-2/3 md:w-1/2">
         <img src={homeWorks} alt="homeAboutUs" style={{ height: "auto" }} />
       </div>

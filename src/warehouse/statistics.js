@@ -68,7 +68,7 @@ const Statistics = () => {
   };
 
   return (
-    <div className="p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard">
+    <div className="p-20 pt-10 bg-white h-screen w-full overflow-y-auto dashboard md:no-scrollbar">
       <h1 className="text-3xl font-semibold">Statistics</h1>
       <p className="text-gray-500">
         Below is the summary of your warehouse activity
@@ -80,7 +80,7 @@ const Statistics = () => {
         >
           <div
             className="absolute w-20 h-20 rounded-full bg-white text-white opacity-20"
-            style={{ bottom: "-30%", right: "-10%" }}
+            style={{ bottom: "-30%", right: "-5%" }}
           ></div>
 
           <div>
@@ -99,7 +99,7 @@ const Statistics = () => {
         >
           <div
             className="absolute w-20 h-20 rounded-full bg-white text-white opacity-20"
-            style={{ bottom: "-30%", right: "-10%" }}
+            style={{ bottom: "-30%", right: "-5%" }}
           ></div>
 
           <div>
@@ -118,7 +118,7 @@ const Statistics = () => {
         >
           <div
             className="absolute w-20 h-20 rounded-full bg-white text-white opacity-20"
-            style={{ bottom: "-30%", right: "-10%" }}
+            style={{ bottom: "-30%", right: "-5%" }}
           ></div>
 
           <div>
@@ -140,7 +140,7 @@ const Statistics = () => {
         >
           <div
             className="absolute w-20 h-20 rounded-full bg-white text-white opacity-20"
-            style={{ bottom: "-30%", right: "-10%" }}
+            style={{ bottom: "-30%", right: "-5%" }}
           ></div>
 
           <div>
@@ -160,7 +160,7 @@ const Statistics = () => {
         >
           <div
             className="absolute w-20 h-20 rounded-full bg-white text-white opacity-20"
-            style={{ bottom: "-30%", right: "-10%" }}
+            style={{ bottom: "-30%", right: "-5%" }}
           ></div>
 
           <div>
@@ -180,7 +180,7 @@ const Statistics = () => {
         >
           <div
             className="absolute w-20 h-20 rounded-full bg-white text-white opacity-20"
-            style={{ bottom: "-30%", right: "-10%" }}
+            style={{ bottom: "-30%", right: "-5%" }}
           ></div>
 
           <div>
